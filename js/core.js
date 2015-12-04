@@ -44,7 +44,7 @@ $(function() {
     var bStarted = false, bPlay = false, bConquer = false;
     $('#status-progress-total').html(nLevels);
     var oLevel;
-    var x0 = Math.floor((w- 128)/ 2), y0 = Math.floor((h- 128)/ 2);
+    var x0 = Math.floor((w- 220)/ 2), y0 = Math.floor((h- 40)/ 2);
     var elBtnPlay = $($('#overlay-play-template').html())
         .css({left: x0+'px', top: y0+'px'})
         .appendTo(elCanvas).hide()
