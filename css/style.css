@@ -1,0 +1,48 @@
+div.my-container {
+    width: 660px;
+    margin: 0 auto 10px;
+}
+
+#graphics {
+    position: relative;
+}
+
+.my-center {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.my-panel {
+    margin-top: 10px;
+}
+
+.overlay {
+    position: absolute;
+    display: block;
+    opacity: 0.5;
+}
+
+#play:hover {
+    opacity: 1;
+} 
+
+#statusbar {
+    width: 640px;
+    padding: 4px 9px;
+    border: 1px solid black;
+    background-color: #f2f2f2;
+    font-family: monospace;
+}
+
+#statusbar > span {
+    margin-right: 9px;
+}
+
+#statusbar > span > span {
+    font-weight: bold;
+}
+
+.answer-btn {
+    width: 150px;
+    margin: 0 5px;
+}
