@@ -107,8 +107,9 @@ $(function() {
         $('#status-progress-current').html(iLevel);
         picxonix('level', oLevel);
         tLevel = Date.now(); nTimeLevel = 0;
-        $('#answeropts').empty().html(tplOptions(oLevel))
-        .children().click(onClickAnswer);
+		//отключаем кнопки ответа
+        //$('#answeropts').empty().html(tplOptions(oLevel))
+        //.children().click(onClickAnswer);
         enableOptions(false);
     }
 
