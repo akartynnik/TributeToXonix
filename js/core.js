@@ -3,7 +3,7 @@ $(function() {
     var size = picxonix(elCanvas[0], {
         width: 600,
         height: 500,
-        nBalls: 2,
+        nBalls: 1,
         nWarders: 1,
         speedCursor: 7,
         callback: function(iEvent) {
@@ -134,7 +134,7 @@ $(function() {
         else {
             var score = 1000* nPoints/ nTimeLevel;
             outResult(0);
-            $('#status-score > span').html(score.toFixed(0)).parent().removeClass('hidden');
+            $('#status-score').html(score.toFixed(0)).parent().removeClass('hidden');
         }
     }
 
@@ -168,6 +168,7 @@ $(function() {
         bConquer = true;
         var val = data.cleared;
         console.log(' val=%f',val);
+        $('#status-cleared').html(parseFloat(val).toPrecision(2));
         if (val < 75) return false;
         setTimeout(function() {
             picxonix('end', true);

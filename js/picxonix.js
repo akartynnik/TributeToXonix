@@ -1,10 +1,3 @@
-/**
- * PicXonix
- * https://github.com/hindmost/picxonix
- * @author   Savr Goryaev
- * @license  MIT http://www.opensource.org/licenses/MIT
- */
-
 // requestAnimationFrame/cancelAnimationFrame polyfill:
 (function() {
     var tLast = 0;
