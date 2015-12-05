@@ -1,15 +1,12 @@
-var level=1;
-
-
 $(function game() {
     var elCanvas = $('#graphics');
 	var allowedFails = 3;
     var size = picxonix(elCanvas[0], {
-        width: 600,
-        height: 500,
-        nBalls: level,
-        nWarders: level,
-        speedCursor: 7*level,
+        width: 1280,
+        height: 800,
+        nBalls: 1,
+        nWarders: 1,
+        speedCursor: 7,
         callback: function(iEvent) {
             switch (iEvent) {
                 case 0: // animation frame
@@ -32,10 +29,7 @@ $(function game() {
     var imagesArray = [
         {"image": "pic1.png"},
         {"image": "pic2.png"},
-        {"image": "pic3.png"},
-        {"image": "pic4.png"},
-        {"image": "pic5.png"},
-        {"image": "pic6.png"}
+        {"image": "pic3.jpg"}
     ];
     var nLevels = imagesArray.length;
 	//задаем рандомную картинку на старте

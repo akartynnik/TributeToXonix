@@ -17,7 +17,7 @@ body {
 	font-family: "Qix Small";
 	font-size: 37px;
 	display: inline-block;
-	margin: 45px 0 25px 390px;
+	margin: 45px 0 25px 0px;
 }
 
 .header{
@@ -53,8 +53,8 @@ body {
 }
 
 div.my-container {
-    width: 1060px;
-    margin: 0 200px 10px;
+    width: 1344px;
+	margin: 0 auto;
 }
 
 #graphics {

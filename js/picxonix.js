@@ -58,8 +58,8 @@
     }
 
     var cfgMain = {
-        width: 600,
-        height: 400,
+        width: 1280,
+        height: 800,
         sizeCell: 16,
         colorFill: '#000000',
         colorBorder: '#ffffff',
@@ -193,7 +193,7 @@
         imgCursor = new Image();
         imgCursor.src = ctxTmp.canvas.toDataURL();
 		//imgCursor.src = "images/pacman.gif"
-        return {width: width+ 2*sizeCell, height: height+ 2*sizeCell};
+        return {width: width+ 4*sizeCell, height: height+ 4*sizeCell}; //canvas size
     }
 
     function loadLevel(data) {
