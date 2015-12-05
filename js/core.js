@@ -1,10 +1,24 @@
 $(function game() {
+	var gameLavels = [
+        {"number": "1", "ballsCount": 1},
+        {"number": "2", "ballsCount": 2},
+        {"number": "3", "ballsCount": 100}
+    ];
+	var currentLavel = ParseUrl("clevel");
+	if(currentLavel === "Not found"){
+		currentLavel = 1;
+	}
+	
+    console.log("current level is: "+currentLavel);
+	
+    console.log("bols count: "+gameLavels[currentLavel-1].ballsCount);
     var elCanvas = $('#graphics');
-	var allowedFails = 3;
+	var allowedFails = 3; //default = 3
+	var percentToWin = 85; //default =  85
     var size = picxonix(elCanvas[0], {
         width: 1280,
         height: 800,
-        nBalls: 1,
+        nBalls: gameLavels[currentLavel-1].ballsCount,
         nWarders: 1,
         speedCursor: 7,
         callback: function(iEvent) {
@@ -125,12 +139,40 @@ $(function game() {
         var val = data.cleared;
         console.log(' val=%f',val);
         $('#status-cleared').html(parseFloat(val).toPrecision(2));
-        if (val < 85) return false;
+        if (val < percentToWin) return false;
         setTimeout(function() {
             picxonix('end', true);
         }, 1000);
-        return true;
+		NextLavelLoad(currentLavel);
+        //return true;
     }
 
 });
+
+
+function ParseUrl(val) {
+    var result = "Not found",
+        tmp = [];
+    location.search
+    //.replace ( "?", "" ) 
+    // this is better, there might be a question mark inside
+    .substr(1)
+        .split("&")
+        .forEach(function (item) {
+        tmp = item.split("=");
+        if (tmp[0] === val) result = decodeURIComponent(tmp[1]);
+    });
+    return result;
+}
+
+function NextLavelLoad(cLevel){
+	var url = window.location.href;
+	console.log("ololo" + window.location.href);
+	var nLevel = parseInt(cLevel)+1;
+	if (url.indexOf('?') > -1){
+		url =window.location.href.split('?')[0];
+	}
+	url += '?clevel='+nLevel;
+	window.location.href = url;
+}
     
