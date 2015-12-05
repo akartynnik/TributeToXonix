@@ -60,7 +60,7 @@
     var cfgMain = {
         width: 600,
         height: 400,
-        sizeCell: 10,
+        sizeCell: 16,
         colorFill: '#000000',
         colorBorder: '#ffffff',
         colorBall: '#ffffff',
@@ -172,7 +172,8 @@
             ctxTmp.fill();
         }
         imgBall = new Image();
-        imgBall.src = ctxTmp.canvas.toDataURL();
+        //imgBall.src = ctxTmp.canvas.toDataURL();
+		imgBall.src = "images/inky.png"
         function prepareSquare(colorOut, colorIn) {
             ctxTmp.clearRect(0, 0, sizeCell, sizeCell);
             ctxTmp.fillStyle = colorOut;
@@ -185,11 +186,13 @@
         // prepare warder image:
         prepareSquare(cfgMain.colorWarder, cfgMain.colorWarderIn);
         imgWarder = new Image();
-        imgWarder.src = ctxTmp.canvas.toDataURL();
+        //imgWarder.src = ctxTmp.canvas.toDataURL();
+		imgWarder.src = "images/blinky.png"
         // prepare cursor image:
         prepareSquare(cfgMain.colorCursor, cfgMain.colorCursorIn);
         imgCursor = new Image();
-        imgCursor.src = ctxTmp.canvas.toDataURL();
+        //imgCursor.src = ctxTmp.canvas.toDataURL();
+		imgCursor.src = "images/pacman.png"
         return {width: width+ 4*sizeCell, height: height+ 4*sizeCell};
     }
 
