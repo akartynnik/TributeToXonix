@@ -23,6 +23,7 @@
                     Faults: <span id="status-faults">0</span><br/>
                     Cleared: <span id="status-cleared">0</span>%
                 </div>
+                <div class="level" id="level-name"></div>
             </div>
 
             <div id="graphics" class="my-center"></div>
@@ -33,15 +34,17 @@
 				RESTART
 			</a>
         </script>
-
-        <!-- script type="text/template" id="answeropts-template">
-            <% _.each(optionsout, function(el) { %>
-                <button type="button" class="btn btn-primary answer-btn clearfix" data-optionid="<%= el[0] %>">
-                    <span class="glyphicon glyphicon-ok pull-left hidden"></span><span class="glyphicon glyphicon-remove pull-left hidden"></span>
-                    <%= el[1] %>
-                </button>
-            <% }); %>
-        </script-->
+		
+		
+		<script type="text/template" id="overlay-new-game-template">
+			<div class="win">
+				<span >YOU WIN</span>
+				<a href="#" class="" id="new-game">
+					PLAY AGAIN
+				</a>
+			</div>
+			
+        </script>
 
 
         <script src="js/jquery-1.11.1.min.js"><div</script>

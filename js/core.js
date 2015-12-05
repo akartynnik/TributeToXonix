@@ -1,25 +1,47 @@
 $(function game() {
+	var elCanvas = $('#graphics');
+    var w = 1360;
+	var h = 800;
 	var gameLavels = [
-        {"number": "1", "ballsCount": 1},
-        {"number": "2", "ballsCount": 2},
-        {"number": "3", "ballsCount": 100}
+        {"number": "1", "ballsCount": 1, "wardsNumber": 0, "levelName": "Level I"},
+        {"number": "2", "ballsCount": 1, "wardsNumber": 1, "levelName": "Level II"},
+        {"number": "3", "ballsCount": 2, "wardsNumber": 1, "levelName": "Level III"},
+        {"number": "4", "ballsCount": 3, "wardsNumber": 1, "levelName": "Level IV"},
+        {"number": "5", "ballsCount": 3, "wardsNumber": 2, "levelName": "Level V"},
     ];
 	var currentLavel = ParseUrl("clevel");
 	if(currentLavel === "Not found"){
 		currentLavel = 1;
 	}
 	
-    console.log("current level is: "+currentLavel);
 	
-    console.log("bols count: "+gameLavels[currentLavel-1].ballsCount);
-    var elCanvas = $('#graphics');
-	var allowedFails = 3; //default = 3
-	var percentToWin = 85; //default =  85
+	if(currentLavel > gameLavels.length){
+		var newGameButtonPositionX = Math.floor((w- 310)/ 2)
+		var newGameButtonPositionY = Math.floor((h- 60)/ 2);
+		$($('#overlay-new-game-template').html())
+			.css({left: newGameButtonPositionX+'px', top:newGameButtonPositionY+'px'})
+			.appendTo(elCanvas)
+			.show()
+			.click(function(e) {
+				e.preventDefault();
+				e.stopPropagation();
+				window.location.href = window.location.href.split('?')[0];
+			});;
+		console.log("current level is: "+currentLavel);
+		console.log("gameLavels length: "+gameLavels.length);
+		return;
+	}
+	
+	
+	$("#level-name").text(gameLavels[currentLavel-1].levelName);
+	
+	var allowedFails = 30; //default = 3
+	var percentToWin = 1; //default =  85
     var size = picxonix(elCanvas[0], {
-        width: 1280,
-        height: 800,
+        width: w,
+        height: h,
         nBalls: gameLavels[currentLavel-1].ballsCount,
-        nWarders: 1,
+        nWarders: gameLavels[currentLavel-1].wardsNumber,
         speedCursor: 7,
         callback: function(iEvent) {
             switch (iEvent) {
@@ -36,7 +58,6 @@ $(function game() {
     });
     if (!size) return;
 
-    var w = size.width, h = size.height;
     elCanvas.css({width: w, height: h});
     console.log(' size(contr)=(%d,%d);',w,h);
 
@@ -142,9 +163,9 @@ $(function game() {
         if (val < percentToWin) return false;
         setTimeout(function() {
             picxonix('end', true);
-        }, 1000);
-		NextLavelLoad(currentLavel);
-        //return true;
+        }, 200);
+		setTimeout(function() {NextLavelLoad(currentLavel);}, 3000);
+        return true;
     }
 
 });

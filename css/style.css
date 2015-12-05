@@ -34,10 +34,14 @@ body {
 .start {
 	font-family: "Qix Large";
 	font-size: 45px;
-	color: #E2322F
+	color: #E2322F;
+	text-decoration: none !important;
 }
 
-.start:hover {
+.start:hover,
+.win a:hover,
+.start:active,
+.win a:active {
 	color: #2A6496;
 	text-decoration: none !important;
 }
@@ -49,11 +53,11 @@ body {
 	float: right;
 	margin: 25px 0px 0 0;
 	font-family: "Qix Large";
-	width: 210px;
+	width: 230px;
 }
 
 div.my-container {
-    width: 1344px;
+    width: 1360px;
 	margin: 0 auto;
 }
 
@@ -80,3 +84,39 @@ div.my-container {
 #play:hover {
     opacity: 1;
 } 
+
+.level{
+	display: inline-block;
+	padding: 10px 15px;
+	float: right;
+	margin: 25px 0px 0 0;
+	font-family: "Qix Large";
+	font-size: 20px;
+	width: 210px;
+	margin-right: 15px;
+}
+
+.win {
+	display: inline-block; 
+	position: absolute; 
+	width: 500px;
+}
+
+.win span{
+	font-size: 50px;
+	font-size: 50px;
+	text-align: center;
+	font-family: "Qix Large";
+	display: inline-block;
+	width: 100%;
+}
+
+.win a {
+	font-family: "Qix Large";
+	font-size: 25px;
+	color: #E2322F;
+	display: inline-block;
+	width: 100%;
+	text-align: center;
+	text-decoration: none !important;
+}
