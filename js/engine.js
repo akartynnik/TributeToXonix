@@ -60,7 +60,7 @@
     var cfgMain = {
         width: 1280,
         height: 800,
-        sizeCell: 16,
+        sizeCell: 20,
         colorFill: '#000000',
         colorBorder: '#ffffff',
         colorBall: '#ffffff',
