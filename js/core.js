@@ -1,5 +1,6 @@
 $(function() {
     var elCanvas = $('#graphics');
+	var allowedFails = 3;
     var size = picxonix(elCanvas[0], {
         width: 600,
         height: 500,
@@ -23,42 +24,41 @@ $(function() {
 
     var w = size.width, h = size.height;
     elCanvas.css({width: w, height: h});
-    console.log(' size(contr)=(%d,%d); pos(playbtn)=(%d,%d)',w,h,x0,y0);
+    console.log(' size(contr)=(%d,%d);',w,h);
 
-    var aAnswers = [
-        "Argentina", "Australia", "Austria", "Brazil", "Cuba", "Greece", "India", "Japan"
+    var imagesArray = [
+        {"image": "pic1.png"},
+        {"image": "pic2.png"},
+        {"image": "pic3.png"}
     ];
-    var aLevels = [
-        {"image": "pic1.png", "answer": 0, "optionsout": []},
-        {"image": "pic2.png", "answer": 1, "optionsout": []},
-        {"image": "pic3.png", "answer": 5, "optionsout": []}
-    ];
-    var nAnswers = aAnswers.length;
-    var nLevels = aLevels.length;
-    var iLevel = 0;
+    var nLevels = imagesArray.length;
+	//задаем рандомную картинку на старте
     var tLevel = 0;
     var nTimeLevel = 0;
     var nTimeTotal = 0;
     var nPoints = 0;
     var nFaults = 0;
-    var bStarted = false, bPlay = false, bConquer = false;
-    $('#status-progress-total').html(nLevels);
+    var bStarted = false;
+	var bPlay = false;
     var oLevel;
-    var x0 = Math.floor((w- 220)/ 2), y0 = Math.floor((h- 40)/ 2);
-    var elBtnPlay = $($('#overlay-play-template').html())
-        .css({left: x0+'px', top: y0+'px'})
-        .appendTo(elCanvas).hide()
-        .click(function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            startLevel();
-        });
-    console.log(' pos(playbtn)=(%d,%d)',x0,y0);
     var elTime = $('#status-time');
-    var tplOptions = _.template($('#answeropts-template').html());
+	
+	var restartButtonPositionX = Math.floor((w- 310)/ 2)
+	var restartButtonPositionY = Math.floor((h- 60)/ 2);
+	var restartBtn = $($('#overlay-restart-template').html())
+			.css({left: restartButtonPositionX+'px', top:restartButtonPositionY+'px'})
+			.appendTo(elCanvas).hide()
+			.click(function(e) {
+				e.preventDefault();
+				e.stopPropagation();
+				//костыль - если нажимаем RELOAD, то страница просто перезагружается.
+				location.reload();
+			});
+	
     preloadLevel();
+	startLevel();
 
-    var keyHash = {37: 'left', 39: 'right', 38: 'up', 40: 'down', 32: 'stop'};
+    var keyHash = {37: 'left', 39: 'right', 38: 'up', 40: 'down', 80: 'stop'};
     $(document).keydown(function(e) {
         var key = e.which;
         console.log('ON-keydown: key=%d',key);
@@ -77,65 +77,21 @@ $(function() {
 
 
     function preloadLevel() {
-        oLevel = aLevels[iLevel++];
+		var randomImageNumber = Math.floor((Math.random() * imagesArray.length));
+        oLevel = imagesArray[randomImageNumber];
         var img = new Image();
-        img.onload = function() {
-            elBtnPlay.show();
-        };
         img.src = oLevel.image = 'images/'+oLevel.image;
-        var aOpts = [], k0 = oLevel.answer;
-        for (var i = 0; i < 3; i++) {
-            for (var j = 100; j > 0; j--) {
-                var k = Math.floor(Math.random() * nAnswers);
-                if (!(k != k0 && aOpts.indexOf(k) < 0)) continue;
-                aOpts.push(k); break;
-            }
-            if (!j) return;
-        }
-        aOpts.splice(Math.floor(Math.random() * 4), 0, k0);
-        console.log('preloadLevel(): iLevel=%d; k0=%d; aOpts=[%s]',iLevel,k0,aOpts);
-        oLevel.optionsout = aOpts.map(function(k) { return [k, aAnswers[k]]; });
     }
 
     function startLevel() {
         if (!oLevel) return;
-        elBtnPlay.hide();
-        console.log('startLevel(): iLevel=%d; nAnswers=%d',iLevel,nAnswers);
+		restartBtn.hide(500);
         if (!bStarted)
             $('.my-panel').removeClass('hidden');
-        bStarted = bPlay = true; bConquer = false;
-        $('#status-progress-current').html(iLevel);
+        bStarted = bPlay = true; 
         picxonix('level', oLevel);
-        tLevel = Date.now(); nTimeLevel = 0;
-		//отключаем кнопки ответа
-        //$('#answeropts').empty().html(tplOptions(oLevel))
-        //.children().click(onClickAnswer);
-        enableOptions(false);
-    }
-
-    function onClickAnswer() {
-        $(this).blur();
-        enableOptions(false);
-        var id = $(this).data('optionid');
-        var bOk = id == oLevel.answer;
-        console.log('onClickAnswer(): id=%d; answer=%d; bOk=%d',id,oLevel.answer,bOk);
-        picxonix('play', false);
-        picxonix('end', true);
-        updateTime();
-        nTimeTotal += nTimeLevel;
-        if (bOk) {
-            nPoints++;
-            console.log(' nPoints=%d',nPoints);
-            $('#status-points').html(nPoints);
-        }
-        $(this).children('span').eq(bOk? 0 : 1).removeClass('hidden');
-        if (iLevel < nLevels)
-            preloadLevel();
-        else {
-            var score = 1000* nPoints/ nTimeLevel;
-            outResult(0);
-            $('#status-score').html(score.toFixed(0)).parent().removeClass('hidden');
-        }
+        tLevel = Date.now(); 
+		nTimeLevel = 0;
     }
 
     function updateTime() {
@@ -151,21 +107,21 @@ $(function() {
         elTime.html(str_pad(nm)+':'+str_pad(ns));
     }
 
+	//Проверка на то, столкнулись ли (Fail)
     function raiseFaults() {
         console.log('raiseFaults():');
         $('#status-faults').html(++nFaults);
-        if (nFaults < 3) return;
+        if (nFaults < allowedFails) return;
+		//показываем копку Restart, если столкнулись больше, чем allowedFails раз
+		restartBtn.show(500);		
         picxonix('end', false);
-        enableOptions(false);
-        outResult(1);
     }
 
+	//Проверка на то, выиграли ли
     function raiseConquer() {
         var data = picxonix('state');
         console.log('raiseConquer(): data=%o',data);
         if (!data) return false;
-        if (!bConquer) enableOptions(true);
-        bConquer = true;
         var val = data.cleared;
         console.log(' val=%f',val);
         $('#status-cleared').html(parseFloat(val).toPrecision(2));
@@ -176,13 +132,5 @@ $(function() {
         return true;
     }
 
-    function enableOptions(bOn) {
-        $('#answeropts > button').prop('disabled', !bOn);
-    }
-
-    function outResult(i) {
-        $('#status-status').removeClass('hidden')
-        .children('span').eq(i%2).removeClass('hidden');
-    }
 });
     
