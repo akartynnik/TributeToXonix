@@ -2,6 +2,8 @@ $(function game() {
 	var elCanvas = $('#graphics');
     var w = 1360;
 	var h = 800;
+	
+	var gameFinish = false;
 	var gameLavels = [
         {"number": "1", "ballsCount": 1, "wardsNumber": 0, "levelName": "Level I"},
         {"number": "2", "ballsCount": 1, "wardsNumber": 1, "levelName": "Level II"},
@@ -14,6 +16,17 @@ $(function game() {
 		currentLavel = 1;
 	}
 	
+	//очередной костыль, дублирование =- выкосить надо
+	$(document).keydown(function(e) {
+        var key = e.which;
+		
+		//обработка нажатия Enter
+		if(key === 13 && gameFinish){
+			e.preventDefault();
+			e.stopPropagation();
+			window.location.href = window.location.href.split('?')[0];
+		}
+    });
 	
 	if(currentLavel > gameLavels.length){
 		var newGameButtonPositionX = Math.floor((w- 310)/ 2)
@@ -26,9 +39,8 @@ $(function game() {
 				e.preventDefault();
 				e.stopPropagation();
 				window.location.href = window.location.href.split('?')[0];
-			});;
-		console.log("current level is: "+currentLavel);
-		console.log("gameLavels length: "+gameLavels.length);
+			});
+			gameFinish = true;	
 		return;
 	}
 	
@@ -86,10 +98,8 @@ $(function game() {
 			.click(function(e) {
 				e.preventDefault();
 				e.stopPropagation();
-				//костыль - если нажимаем RELOAD, то страница просто перезагружается.
-				location.reload();
+				window.location.href = window.location.href.split('?')[0];
 			});
-	
     preloadLevel();
 	startLevel();
 
@@ -97,6 +107,14 @@ $(function game() {
     $(document).keydown(function(e) {
         var key = e.which;
         console.log('ON-keydown: key=%d',key);
+		
+		//обработка нажатия Enter
+		if(key === 13 && gameFinish){
+			e.preventDefault();
+			e.stopPropagation();
+			window.location.href = window.location.href.split('?')[0];
+		}
+		
         if (!bPlay || !(key in keyHash)) return;
         e.preventDefault();
         picxonix('cursorDir', keyHash[key]);
@@ -148,7 +166,8 @@ $(function game() {
         $('#status-faults').html(++nFaults);
         if (nFaults < allowedFails) return;
 		//показываем копку Restart, если столкнулись больше, чем allowedFails раз
-		restartBtn.show(500);		
+		restartBtn.show(500);	
+		gameFinish = true;		
         picxonix('end', false);
     }
 
