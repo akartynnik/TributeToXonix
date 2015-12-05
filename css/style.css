@@ -72,7 +72,7 @@ div.my-container {
 
 .overlay {
     position: absolute;
-	left: 50px;
+	left: 5px;
     display: block;
     opacity: 0.9;
 }

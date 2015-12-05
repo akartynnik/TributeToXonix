@@ -1,12 +1,15 @@
-$(function() {
+var level=1;
+
+
+$(function game() {
     var elCanvas = $('#graphics');
 	var allowedFails = 3;
     var size = picxonix(elCanvas[0], {
         width: 600,
         height: 500,
-        nBalls: 1,
-        nWarders: 1,
-        speedCursor: 7,
+        nBalls: level,
+        nWarders: level,
+        speedCursor: 5*level,
         callback: function(iEvent) {
             switch (iEvent) {
                 case 0: // animation frame
@@ -125,10 +128,13 @@ $(function() {
         var val = data.cleared;
         console.log(' val=%f',val);
         $('#status-cleared').html(parseFloat(val).toPrecision(2));
-        if (val < 75) return false;
+        if (val < 85) return false;
         setTimeout(function() {
             picxonix('end', true);
         }, 1000);
+        level=level+1;
+        game();
+        alert("Ghbdtn");
         return true;
     }
 

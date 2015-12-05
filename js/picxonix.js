@@ -29,28 +29,28 @@
             return init(v1, v2);
         }
         switch (v1) {
-            case 'level': // start new level
+            case 'level': // начать новый уровень
                 loadLevel(v2);
                 break;
-            case 'end': // finish the current level
+            case 'end': // закончить текущий уровень
                 endLevel(v2);
                 break;
             case 'play': // set playing mode
                 setPlayMode(v2);
                 break;
-            case 'cursorDir': // set the cursor movement direction
+            case 'cursorDir': // направление курсора
                 typeof v2 == 'string'? setDir(v2) : setDirToward(v2);
                 break;
-            case 'cursorSpeed': // set the cursor speed
+            case 'cursorSpeed': // скорость курсора
                 setCursorSpeed(v2);
                 break;
-            case 'enemySpeed': // set enemy speed
-                setEnemySpeed(v2);
+            case 'enemySpeed': // скорость врага
+                setEnemySpeed(5);
                 break;
-            case 'enemySpawn': // introduce extra warder object
+            case 'enemySpawn': // возрождение врага
                 spawn();
                 break;
-            case 'state': // get the current level state
+            case 'state': // состояние уровня
                 return buildLevelState();
             default:
         }
@@ -78,7 +78,7 @@
         nBalls: 1,
         nWarders: 1,
         speedCursor: 5,
-        speedEnemy: 5
+        speedEnemy: 70
     };
     // cell attributes:
     var CA_CLEAR = 1 << 0;
@@ -192,7 +192,7 @@
         prepareSquare(cfgMain.colorCursor, cfgMain.colorCursorIn);
         imgCursor = new Image();
         //imgCursor.src = ctxTmp.canvas.toDataURL();
-		imgCursor.src = "images/pacman.png"
+		imgCursor.src = "images/pacman.gif"
         return {width: width+ 4*sizeCell, height: height+ 4*sizeCell};
     }
 
