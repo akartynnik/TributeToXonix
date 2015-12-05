@@ -67,9 +67,9 @@
         colorBallIn: '#000000',
         colorWarder: '#000000',
         colorWarderIn: '#f80000',
-        colorCursor: '#aa00aa',
+        colorCursor: '#FF610D',
         colorCursorIn: '#00aaaa',
-        colorTrail: '#a800a8',
+        colorTrail: '#ffc624',
         timeoutCollision: 1000,
         callback: null,
         callbackOnFrame: false
@@ -143,8 +143,8 @@
         (function() {
             var canvas = document.createElement('canvas');
             ctxMain = canvas.getContext('2d');
-            canvas.width = width+ 4*sizeCell;
-            canvas.height = height+ 4*sizeCell;
+            canvas.width = width+ 2*sizeCell;
+            canvas.height = height+ 2*sizeCell;
             canvas.style.position = 'absolute';
             canvas.style.left = canvas.style.top = 0;
             fillCanvas();
@@ -191,9 +191,9 @@
         // prepare cursor image:
         prepareSquare(cfgMain.colorCursor, cfgMain.colorCursorIn);
         imgCursor = new Image();
-        //imgCursor.src = ctxTmp.canvas.toDataURL();
-		imgCursor.src = "images/pacman.gif"
-        return {width: width+ 4*sizeCell, height: height+ 4*sizeCell};
+        imgCursor.src = ctxTmp.canvas.toDataURL();
+		//imgCursor.src = "images/pacman.gif"
+        return {width: width+ 2*sizeCell, height: height+ 2*sizeCell};
     }
 
     function loadLevel(data) {
@@ -612,6 +612,7 @@
         getPreTrailCell: function() {
             return this.cellPreTrail;
         },
+        
         // wrapper of conquered regions detection
         conquer: function() {
             var nTrail = this.aTrail.length;

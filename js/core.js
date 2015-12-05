@@ -9,7 +9,7 @@ $(function game() {
         height: 500,
         nBalls: level,
         nWarders: level,
-        speedCursor: 5*level,
+        speedCursor: 7*level,
         callback: function(iEvent) {
             switch (iEvent) {
                 case 0: // animation frame
@@ -32,7 +32,10 @@ $(function game() {
     var imagesArray = [
         {"image": "pic1.png"},
         {"image": "pic2.png"},
-        {"image": "pic3.png"}
+        {"image": "pic3.png"},
+        {"image": "pic4.png"},
+        {"image": "pic5.png"},
+        {"image": "pic6.png"}
     ];
     var nLevels = imagesArray.length;
 	//задаем рандомную картинку на старте
@@ -132,9 +135,6 @@ $(function game() {
         setTimeout(function() {
             picxonix('end', true);
         }, 1000);
-        level=level+1;
-        game();
-        alert("Ghbdtn");
         return true;
     }
 

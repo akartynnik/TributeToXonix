@@ -15,9 +15,9 @@ body {
 
 .pre-logo {
 	font-family: "Qix Small";
-	font-size: 22px;
+	font-size: 37px;
 	display: inline-block;
-	margin: 25px 0 25px 10px;
+	margin: 45px 0 25px 390px;
 }
 
 .header{
@@ -26,9 +26,9 @@ body {
 
 .logo {
 	font-family: "Qix Large";
-	font-size: 36px;
+	font-size: 42px;
 	display: inline-block;
-	margin: 25px 0 25px 10px;
+	margin: 25px 0 35px 10px;
 }
 
 .start {
@@ -53,8 +53,8 @@ body {
 }
 
 div.my-container {
-    width: 660px;
-    margin: 0 auto 10px;
+    width: 1060px;
+    margin: 0 200px 10px;
 }
 
 #graphics {
