@@ -35,8 +35,8 @@ $(function game() {
 	
 	$("#level-name").text(gameLavels[currentLavel-1].levelName);
 	
-	var allowedFails = 30; //default = 3
-	var percentToWin = 1; //default =  85
+	var allowedFails = 3; //default = 3
+	var percentToWin = 85; //default =  85
     var size = picxonix(elCanvas[0], {
         width: w,
         height: h,
