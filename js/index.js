@@ -43,7 +43,5 @@ $(function () {
 			$("#left").removeClass("selected");
 			$("#down").removeClass("selected");
 		}
-		
-		$("#olol").text(key);
 	});
 });

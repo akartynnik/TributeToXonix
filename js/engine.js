@@ -173,7 +173,7 @@
         }
         imgBall = new Image();
         //imgBall.src = ctxTmp.canvas.toDataURL();
-		imgBall.src = "images/inky.png"
+		imgBall.src = "images/inky.png";
         function prepareSquare(colorOut, colorIn) {
             ctxTmp.clearRect(0, 0, sizeCell, sizeCell);
             ctxTmp.fillStyle = colorOut;
@@ -187,12 +187,12 @@
         prepareSquare(cfgMain.colorWarder, cfgMain.colorWarderIn);
         imgWarder = new Image();
         //imgWarder.src = ctxTmp.canvas.toDataURL();
-		imgWarder.src = "images/blinky.png"
+		imgWarder.src = "images/blinky.png";
         // prepare cursor image:
         prepareSquare(cfgMain.colorCursor, cfgMain.colorCursorIn);
         imgCursor = new Image();
-        imgCursor.src = ctxTmp.canvas.toDataURL();
-		//imgCursor.src = "images/pacman.gif"
+        //imgCursor.src = ctxTmp.canvas.toDataURL();
+		imgCursor.src = "images/cursor1.png"
         return {width: width+ 4*sizeCell, height: height+ 4*sizeCell}; //canvas size
     }
 
@@ -302,8 +302,23 @@
         tLastFrame = idFrame = 0;
     }
 
+	var colorCursorBeepFlag = true;
+	var oldDiteTime ;
+	
     // The main animation loop
     function loop(now) {
+		var currentSeconds = Math.floor(Date.now() / 100);
+		if(currentSeconds%2 === 0 && currentSeconds!=oldDiteTime){
+			if(colorCursorBeepFlag){
+				imgCursor.src = "images/cursor1.png";
+				colorCursorBeepFlag = false;
+			}else{
+				imgCursor.src = "images/cursor2.png";
+				colorCursorBeepFlag = true;
+			}
+		}
+		oldDiteTime = currentSeconds;
+		
         var dt = tLastFrame? (now - tLastFrame) / 1000 : 0;
         bCollision = bConquer = false;
         if (!tLastFrame || update(dt)) {
@@ -961,10 +976,11 @@
         },
         // render current position:
         render: function() {
-            if (this.x0 == this.x && this.y0 == this.y) {
-                if (tLastFrame) return;
-            }
-            else {
+			//включаем моргание курсора
+            //if (this.x0 == this.x && this.y0 == this.y) {
+             //   if (tLastFrame) return;
+            //}
+            //else {
                 if (this.state0) {
                     var rect = cellset.lastTrailLine();
                     fillCellArea.apply(null, [cfgMain.colorTrail].concat(rect));
@@ -976,7 +992,7 @@
                         fillCellArea(cfgMain.colorBorder, this.x0, this.y0);
                 }
                 this.x0 = this.x; this.y0 = this.y;
-            }
+            //}
             this.state0 = this.state;
             drawCellImg(imgCursor, this.x, this.y);
         },

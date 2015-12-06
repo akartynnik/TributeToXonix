@@ -2,7 +2,7 @@ $(function () {
 	var elCanvas = $('#graphics');
     var w = 1360;
 	var h = 800;
-	var allowedFails = 1; //default = 3
+	var allowedFails = 3; //default = 3
 	var percentToWin = 85; //default =  85
 	var canvasPopupPositionX = Math.floor((w- 700)/ 2)
 	var canvasPopupPositionY = Math.floor((h- 200)/ 2);
@@ -13,17 +13,21 @@ $(function () {
 	
 	var gameFinish = false;
 	var gameLavels = [
-        {"number": "1", "ballsCount": 1, "wardsNumber": 0, "levelName": "Level I", "coef": 1000},
-        {"number": "2", "ballsCount": 1, "wardsNumber": 1, "levelName": "Level II", "coef": 1200},
-        {"number": "3", "ballsCount": 2, "wardsNumber": 1, "levelName": "Level III", "coef": 1400},
-        {"number": "4", "ballsCount": 3, "wardsNumber": 1, "levelName": "Level IV", "coef": 1600},
-        {"number": "5", "ballsCount": 3, "wardsNumber": 2, "levelName": "Level V", "coef": 1800},
+        {"number": "1", "ballsCount": 1, "wardsNumber": 0, "levelName": "Level I", "coef": 1000, "music":"11.mp3"},
+        {"number": "2", "ballsCount": 1, "wardsNumber": 1, "levelName": "Level II", "coef": 1200, "music":"10.mp3"},
+        {"number": "3", "ballsCount": 2, "wardsNumber": 1, "levelName": "Level III", "coef": 1600, "music":"9.mp3"},
+        {"number": "4", "ballsCount": 3, "wardsNumber": 1, "levelName": "Level IV", "coef": 2400, "music":"8.mp3"},
+        {"number": "5", "ballsCount": 3, "wardsNumber": 2, "levelName": "Level V", "coef": 3200, "music":"7.mp3"},
     ];
 
 	var currentLavel = ParseUrl("clevel");
 	if(currentLavel === "Not found"){
 		currentLavel = 1;
 	}
+	
+	$("#music").attr("src", "music/"+ gameLavels[currentLavel-1].music);
+	var music = new Audio("music/"+ gameLavels[currentLavel-1].music);
+	music.play();
 	
 	//Если текущий счет не установлен, либо игра началась заново - обнуляем его.
 	if(localStorage.getItem("cScore") === null || currentLavel===1){
