@@ -3,20 +3,32 @@ $(function game() {
     var w = 1360;
 	var h = 800;
 	var HelpScore=0;
-	localStorage.setItem("Score",0);
 	
 	var gameFinish = false;
 	var gameLavels = [
-        {"number": "1", "ballsCount": 1, "wardsNumber": 0, "levelName": "Level I", "coef": 1},
-        {"number": "2", "ballsCount": 1, "wardsNumber": 1, "levelName": "Level II", "coef": 1.2},
-        {"number": "3", "ballsCount": 2, "wardsNumber": 1, "levelName": "Level III", "coef": 1.4},
-        {"number": "4", "ballsCount": 3, "wardsNumber": 1, "levelName": "Level IV", "coef": 1.6},
-        {"number": "5", "ballsCount": 3, "wardsNumber": 2, "levelName": "Level V", "coef": 1.8},
+        {"number": "1", "ballsCount": 1, "wardsNumber": 0, "levelName": "Level I", "coef": 1000},
+        {"number": "2", "ballsCount": 1, "wardsNumber": 1, "levelName": "Level II", "coef": 1200},
+        {"number": "3", "ballsCount": 2, "wardsNumber": 1, "levelName": "Level III", "coef": 1400},
+        {"number": "4", "ballsCount": 3, "wardsNumber": 1, "levelName": "Level IV", "coef": 1600},
+        {"number": "5", "ballsCount": 3, "wardsNumber": 2, "levelName": "Level V", "coef": 1800},
     ];
+
 	var currentLavel = ParseUrl("clevel");
 	if(currentLavel === "Not found"){
 		currentLavel = 1;
 	}
+	
+	//Если текущий счет не установлен, либо игра началась заново - обнуляем его.
+	if(localStorage.getItem("cScore") === null || currentLavel===1){
+		localStorage.setItem("cScore",0);
+	} 
+	
+	if(localStorage.getItem("hScore") === null){
+		localStorage.setItem("hScore",0);
+	} 
+	
+	$("#h_score").text(localStorage.getItem("hScore"));
+	$("#c_score").text(localStorage.getItem("cScore"));
 	
 	//очередной костыль, дублирование =- выкосить надо
 	$(document).keydown(function(e) {
@@ -26,7 +38,7 @@ $(function game() {
 		if(key === 13 && gameFinish){
 			e.preventDefault();
 			e.stopPropagation();
-			window.location.href = window.location.href.split('?')[0];
+			window.location.href = "index.html";
 		}
     });
 	
@@ -49,7 +61,7 @@ $(function game() {
 	
 	$("#level-name").text(gameLavels[currentLavel-1].levelName);
 	
-	var allowedFails = 3; //default = 3
+	var allowedFails = 1; //default = 3
 	var percentToWin = 85; //default =  85
     var size = picxonix(elCanvas[0], {
         width: w,
@@ -100,7 +112,7 @@ $(function game() {
 			.click(function(e) {
 				e.preventDefault();
 				e.stopPropagation();
-				window.location.href = window.location.href.split('?')[0];
+				window.location.href ="index.html";
 			});
     preloadLevel();
 	startLevel();
@@ -180,7 +192,7 @@ $(function game() {
         if (!data) return false;
         var val = data.cleared;
         console.log(' val=%f',val);
-        HelpScore=val-HelpScore;
+        HelpScore=val-HelpScore; //величина отрезанного блока в процентах
         $('#status-cleared').html(parseFloat(val).toPrecision(2));
         Score(HelpScore,gameLavels[currentLavel-1].coef);
         HelpScore=val;
@@ -195,8 +207,20 @@ $(function game() {
 });
 
 function Score(val, coef){
-	var count=parseInt(localStorage.getItem("Score"))+val*coef;
-	localStorage.setItem("Score", count);
+	var time =$("#status-time");
+	var minutes = parseInt(time.text().split(":")[0]);
+	var seconds = parseInt(time.text().split(":")[1]);
+	var secondsFromStartLevel = (minutes*60)+seconds;
+	
+	var currentScore=Math.round(parseInt(localStorage.getItem("cScore"))+(val*coef)/secondsFromStartLevel);
+	localStorage.setItem("cScore", currentScore);
+	$("#c_score").text(currentScore);
+	
+	var highScore = parseInt(localStorage.getItem("hScore"));
+	if(currentScore>highScore){
+		localStorage.setItem("hScore",currentScore);
+		$("#h_score").text(currentScore);
+	}
 	return;
 }
 
