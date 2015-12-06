@@ -27,6 +27,7 @@ $(function () {
 	
 	$("#music").attr("src", "music/"+ gameLavels[currentLavel-1].music);
 	var music = new Audio("music/"+ gameLavels[currentLavel-1].music);
+	music.loop = true;
 	music.play();
 	
 	//Если текущий счет не установлен, либо игра началась заново - обнуляем его.
@@ -98,12 +99,12 @@ $(function () {
         {"image": "pic10.png"},
         {"image": "pic11.png"},
         {"image": "pic12.png"},
-        {"image": "pic13.png"},
-        {"image": "pic14.png"},
-        {"image": "pic15.png"},
-        {"image": "pic16.png"},
-        {"image": "pic17.png"},
-        {"image": "pic18.png"}
+        //{"image": "pic13.png"},
+        //{"image": "pic14.png"},
+        //{"image": "pic15.png"},
+        {"image": "pic16.png"}
+        //{"image": "pic17.png"},
+        //{"image": "pic18.png"}
     ];
     var nLevels = imagesArray.length;
 	//задаем рандомную картинку на старте
