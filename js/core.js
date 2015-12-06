@@ -90,7 +90,10 @@ $(function game() {
     var imagesArray = [
         {"image": "pic1.png"},
         {"image": "pic2.png"},
-        {"image": "pic3.jpg"}
+        {"image": "pic3.jpg"},
+        {"image": "pic4.png"},
+        {"image": "pic5.png"},
+        {"image": "pic6.jpg"}
     ];
     var nLevels = imagesArray.length;
 	//задаем рандомную картинку на старте
