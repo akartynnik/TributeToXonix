@@ -12,6 +12,8 @@ body {
 	background-color: #000; 
 	color: #ffffff;
 	font-family: "Qix Small";
+	font-size: 20px;
+	line-height: 30px;
 }
 
 .start{
@@ -19,4 +21,17 @@ body {
 	font-size: 50px;
 	color: #F73936;
 	margin-top: 70px;
+}
+
+a {
+	font-family: "Qix Large";
+	font-size: 45px;
+	color: #E2322F;
+	text-decoration: none !important;
+}
+
+a:hover,
+a:active {
+	color: #2A6496;
+	text-decoration: none !important;
 }

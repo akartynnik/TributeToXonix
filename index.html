@@ -2,6 +2,8 @@
 <html>
     <head>
         <meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1"> 
         <title>Tribute to Qix</title>
 
 		<link rel="stylesheet" href="css/index.css">
@@ -10,7 +12,7 @@
     <body>
 		<div style="width: 1360px; margin: 0 auto; margin-top: 50px;" class="">
 			<div style="text-align: center; font-size: 26px;">trebute to </div>
-			<div style="text-align: center; font-size: 150px; margin-bottom: 50px;">QIX</div>
+			<div style="text-align: center; font-size: 150px; margin-bottom: 50px; line-height: 180px;">QIX</div>
 			<div style="overflow: hidden;">
 				<div style="width: 49%; float: left;">
 					<div style="padding: 0 20px;">
@@ -89,19 +91,19 @@
 				</div>
 				
 				<div style="width: 49%; float: left; text-align: center;">
-					<img src="images/game.png" style="width: 500px;"/>
+					<img src="images/game.png" style="width: 700px;"/>
 				</div>
 			</div>
 			
 			<div class="start">
-				PRESS "OK" TO START GAME
+				<a href="game.html">PRESS ME OR "OK" TO START GAME</a>
 			</div>
 		</div>
 		
 		<script src="js/jquery-1.11.1.min.js"></script>
 		
 		<script>
-			$(function () {
+			$(function game() {
 				$(document).keydown(function(e) {
 					var key = e.which;
 					//обработка нажатия Enter

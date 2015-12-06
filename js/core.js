@@ -52,7 +52,7 @@ $(function game() {
 			.click(function(e) {
 				e.preventDefault();
 				e.stopPropagation();
-				window.location.href = window.location.href.split('?')[0];
+				window.location.href = "index.html";
 			});
 			gameFinish = true;	
 		return;
@@ -126,7 +126,7 @@ $(function game() {
 		if(key === 13 && gameFinish){
 			e.preventDefault();
 			e.stopPropagation();
-			window.location.href = window.location.href.split('?')[0];
+			window.location.href = "index.html";
 		}
 		
         if (!bPlay || !(key in keyHash)) return;
