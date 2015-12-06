@@ -2,7 +2,14 @@ $(function () {
 	var elCanvas = $('#graphics');
     var w = 1360;
 	var h = 800;
-	var HelpScore=0;
+	var allowedFails = 1; //default = 3
+	var percentToWin = 85; //default =  85
+	var canvasPopupPositionX = Math.floor((w- 700)/ 2)
+	var canvasPopupPositionY = Math.floor((h- 200)/ 2);
+	$("#allowed-fails").text(allowedFails);
+	$("#percent-to-win").text(percentToWin);
+	
+	var CurrentPercent=0;
 	
 	var gameFinish = false;
 	var gameLavels = [
@@ -27,42 +34,29 @@ $(function () {
 		localStorage.setItem("hScore",0);
 	} 
 	
-	$("#h_score").text(localStorage.getItem("hScore"));
-	$("#c_score").text(localStorage.getItem("cScore"));
+	$("#h_score").text(localStorage.getItem("hScore").replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 '));
+	$("#c_score").text(localStorage.getItem("cScore").replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 '));
 	
-	//очередной костыль, дублирование =- выкосить надо
+	//если игра закончена и нажат Enter или GreenButton - выходим
 	$(document).keydown(function(e) {
         var key = e.which;
-		
-		//обработка нажатия Enter
-		if(key === 13 && gameFinish){
+		if((key === 13 || key === 404) && gameFinish){
 			e.preventDefault();
 			e.stopPropagation();
 			window.location.href = "index.html";
 		}
     });
 	
+	//Если человек перешел на несуществующий левел, считаем что он выиграл :)
 	if(currentLavel > gameLavels.length){
-		var newGameButtonPositionX = Math.floor((w- 310)/ 2)
-		var newGameButtonPositionY = Math.floor((h- 60)/ 2);
-		$($('#overlay-new-game-template').html())
-			.css({left: newGameButtonPositionX+'px', top:newGameButtonPositionY+'px'})
-			.appendTo(elCanvas)
-			.show()
-			.click(function(e) {
-				e.preventDefault();
-				e.stopPropagation();
-				window.location.href = "index.html";
-			});
-			gameFinish = true;	
+		displayPopup("win");
 		return;
 	}
 	
 	
 	$("#level-name").text(gameLavels[currentLavel-1].levelName);
 	
-	var allowedFails = 3; //default = 3
-	var percentToWin = 85; //default =  85
+	
     var size = picxonix(elCanvas[0], {
         width: w,
         height: h,
@@ -119,31 +113,12 @@ $(function () {
     var oLevel;
     var elTime = $('#status-time');
 	
-	var restartButtonPositionX = Math.floor((w- 310)/ 2)
-	var restartButtonPositionY = Math.floor((h- 60)/ 2);
-	var restartBtn = $($('#overlay-restart-template').html())
-			.css({left: restartButtonPositionX+'px', top:restartButtonPositionY+'px'})
-			.appendTo(elCanvas).hide()
-			.click(function(e) {
-				e.preventDefault();
-				e.stopPropagation();
-				window.location.href ="index.html";
-			});
     preloadLevel();
 	startLevel();
 
     var keyHash = {37: 'left', 39: 'right', 38: 'up', 40: 'down', 80: 'stop'};
     $(document).keydown(function(e) {
         var key = e.which;
-        console.log('ON-keydown: key=%d',key);
-		
-		//обработка нажатия Enter
-		if(key === 13 && gameFinish){
-			e.preventDefault();
-			e.stopPropagation();
-			window.location.href = "index.html";
-		}
-		
         if (!bPlay || !(key in keyHash)) return;
         e.preventDefault();
         picxonix('cursorDir', keyHash[key]);
@@ -167,7 +142,6 @@ $(function () {
 
     function startLevel() {
         if (!oLevel) return;
-		restartBtn.hide(500);
         if (!bStarted)
             $('.my-panel').removeClass('hidden');
         bStarted = bPlay = true; 
@@ -191,12 +165,10 @@ $(function () {
 
 	//Проверка на то, столкнулись ли (Fail)
     function raiseFaults() {
-        console.log('raiseFaults():');
         $('#status-faults').html(++nFaults);
         if (nFaults < allowedFails) return;
-		//показываем копку Restart, если столкнулись больше, чем allowedFails раз
-		restartBtn.show(500);	
-		gameFinish = true;		
+		//показываем popup, если столкнулись больше, чем allowedFails раз (проиграли)
+		displayPopup("lose");	
         picxonix('end', false);
     }
 
@@ -207,10 +179,10 @@ $(function () {
         if (!data) return false;
         var val = data.cleared;
         console.log(' val=%f',val);
-        HelpScore=val-HelpScore; //величина отрезанного блока в процентах
+        CurrentPercent = val - CurrentPercent; //величина отрезанного блока в процентах
         $('#status-cleared').html(parseFloat(val).toPrecision(2));
-        Score(HelpScore,gameLavels[currentLavel-1].coef);
-        HelpScore=val;
+        Score(CurrentPercent, gameLavels[currentLavel-1].coef);
+        CurrentPercent = val;
         if (val < percentToWin) return false;
         setTimeout(function() {
             picxonix('end', true);
@@ -218,8 +190,43 @@ $(function () {
 		setTimeout(function() {NextLavelLoad(currentLavel);}, 3000);
         return true;
     }
+	
+	//Функция отображения попапа и биндинг
+	function displayPopup(loseOrWin){
+		$($('#overlay-popup-template').html())
+			.css({left: canvasPopupPositionX+'px', top:canvasPopupPositionY+'px'})
+			.appendTo(elCanvas)
+			.show();
+			
+			switch (loseOrWin) {
+                case "win": 
+                    $("#you-lose").css("display","none");
+					$("#you-win").css("display","block"); 
+					$("#you-lose-btn").css("display","none");
+					$("#you-win-btn").css("display","block");
+					break;
+                case "lose": 
+                    $("#you-lose").css("display","block");
+					$("#you-win").css("display","none");
+                    $("#you-lose-btn").css("display","block");
+					$("#you-win-btn").css("display","none");
+					break;
+                default:
+            }
+			var highScore = parseInt(localStorage.getItem("hScore"));
+			var currentScore = parseInt(localStorage.getItem("cScore"));
+			if(currentScore > highScore){
+				$("#you-score").html("NEW RECORD: <span style='color: red;'>" + currentScore.toString().replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ') + "</span>");
+			} else {
+				$("#you-score").html("YOU SCORE: " + currentScore.toString().replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 '));
+			}
+			gameFinish = true;	
+	}
 
 });
+
+
+/* ----------------------- GLOBAL FUNCTIONS -------------------------*/
 
 function Score(val, coef){
 	var time =$("#status-time");
@@ -229,12 +236,12 @@ function Score(val, coef){
 	
 	var currentScore=Math.round(parseInt(localStorage.getItem("cScore"))+(val*coef)/secondsFromStartLevel);
 	localStorage.setItem("cScore", currentScore);
-	$("#c_score").text(currentScore);
+	$("#c_score").text(currentScore.toString().replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 '));
 	
 	var highScore = parseInt(localStorage.getItem("hScore"));
 	if(currentScore>highScore){
 		localStorage.setItem("hScore",currentScore);
-		$("#h_score").text(currentScore);
+		$("#h_score").text(currentScore.toString().replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 '));
 	}
 	return;
 }
@@ -263,5 +270,9 @@ function NextLavelLoad(cLevel){
 	}
 	url += '?clevel='+nLevel;
 	window.location.href = url;
+}
+
+function RestartStartGame(){
+	window.location.href = "index.html";
 }
     

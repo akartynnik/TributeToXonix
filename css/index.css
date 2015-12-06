@@ -18,14 +18,13 @@ body {
 
 .start{
 	text-align: center;
-	font-size: 50px;
 	color: #F73936;
 	margin-top: 70px;
 }
 
 a {
 	font-family: "Qix Large";
-	font-size: 45px;
+	font-size: 35px;
 	color: #E2322F;
 	text-decoration: none !important;
 }
@@ -34,4 +33,12 @@ a:hover,
 a:active {
 	color: #2A6496;
 	text-decoration: none !important;
+}
+
+.green{
+	color: green;
+}
+
+.selected {
+	color: yellow;
 }

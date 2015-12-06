@@ -15,7 +15,7 @@ body {
 
 .pre-logo {
 	font-family: "Qix Small";
-	font-size: 37px;
+	font-size: 32px;
 	display: inline-block;
 	margin: 45px 0 25px 0px;
 }
@@ -26,9 +26,9 @@ body {
 
 .logo {
 	font-family: "Qix Large";
-	font-size: 42px;
+	font-size: 46px;
 	display: inline-block;
-	margin: 25px 0 35px 10px;
+	margin: 25px 0 35px 30px;
 }
 
 .start {
@@ -47,13 +47,14 @@ body {
 }
 
 .statistics {
-	border: 3px solid white;
 	display: inline-block;
 	padding: 10px 15px;
 	float: right;
 	margin: 25px 0px 0 0;
 	font-family: "Qix Large";
-	width: 300px;
+	width: 340px;
+	font-size: 16px;
+	line-height: 30px;
 }
 
 div.my-container {
@@ -92,14 +93,14 @@ div.my-container {
 	margin: 25px 0px 0 0;
 	font-family: "Qix Large";
 	font-size: 16px;
-	width: 510px;
+	width: 420px;
 	margin-right: 15px;
+	line-height: 30px;
 }
 
 .level-and-score #level-name{
-	font-size: 20px;
+	font-size: 16px;
 	color: yellow;
-	margin-bottom: 10px;
 }
 
 .level-and-score #h_score{
@@ -110,32 +111,33 @@ div.my-container {
 	color: lightblue;
 }
 
-.score{
-	display: inline-block;
-	padding: 10px 15px;
-	float: right;
-	margin: 25px 0px 0 0;
-	font-family: "Qix Large";
-	font-size: 20px;
-	width: 210px;
-	margin-right: 15px;
-}
-
-.win {
+.popup {
 	display: inline-block; 
 	position: absolute; 
-	width: 600px;
+	width: 700px;
+	border: 16px solid white;
+	padding: 20px;
+	background-color: #000000;
+	text-align: center;
 }
 
-.win span{
-	font-size: 50px;
+.popup .popup-header{
 	font-size: 50px;
 	font-family: "Qix Large";
 	display: inline-block;
 	width: 100%;
 }
 
-.win a {
+.popup #you-score{
+	font-size: 26px;
+	font-family: "Qix Large";
+	display: inline-block;
+	width: 100%;
+	padding-bottom: 15px;
+	padding-top: 15px;
+}
+
+.popup a {
 	font-family: "Qix Large";
 	font-size: 25px;
 	color: #E2322F;
