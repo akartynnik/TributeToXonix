@@ -2,16 +2,14 @@
 <html>
     <head>
         <meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1"> 
         <title>Tribute to Qix</title>
 
-		<link rel="stylesheet" href="css/index.css">
+		<link rel="stylesheet" href="css/index.css">		
 		
     </head>
     <body>
 		<div style="width: 1360px; margin: 0 auto; margin-top: 50px;" class="">
-			<div style="text-align: center; font-size: 26px;">trebute to </div>
+			<div style="text-align: center; font-size: 26px;">tribute to </div>
 			<div style="text-align: center; font-size: 150px; margin-bottom: 50px; line-height: 180px;">QIX</div>
 			<div style="overflow: hidden;">
 				<div style="width: 49%; float: left;">
@@ -74,7 +72,8 @@
 									&darr;
 								</td>
 								<td>
-									to move down
+									to move down 
+									<span id="olol"></span>
 								</td>
 							</tr>
 							
@@ -101,19 +100,6 @@
 		</div>
 		
 		<script src="js/jquery-1.11.1.min.js"></script>
-		
-		<script>
-			$(function game() {
-				$(document).keydown(function(e) {
-					var key = e.which;
-					//обработка нажатия Enter
-					if(key === 13){
-						e.preventDefault();
-						e.stopPropagation();
-						window.location.href = "game.html";
-					}
-				});
-			});
-		</script>
+		<script src="js/index.js"></script>
    </body>
 </html>

@@ -1,4 +1,4 @@
-$(function game() {
+$(function () {
 	var elCanvas = $('#graphics');
     var w = 1360;
 	var h = 800;
@@ -93,7 +93,19 @@ $(function game() {
         {"image": "pic3.jpg"},
         {"image": "pic4.png"},
         {"image": "pic5.png"},
-        {"image": "pic6.jpg"}
+        {"image": "pic6.png"},
+        {"image": "pic7.png"},
+        {"image": "pic8.png"},
+        {"image": "pic9.png"},
+        {"image": "pic10.png"},
+        {"image": "pic11.png"},
+        {"image": "pic12.png"},
+        {"image": "pic13.png"},
+        {"image": "pic14.png"},
+        {"image": "pic15.png"},
+        {"image": "pic16.png"},
+        {"image": "pic17.png"},
+        {"image": "pic18.png"}
     ];
     var nLevels = imagesArray.length;
 	//задаем рандомную картинку на старте
