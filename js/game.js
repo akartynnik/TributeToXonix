@@ -13,22 +13,17 @@ $(function () {
 	
 	var gameFinish = false;
 	var gameLavels = [
-        {"number": "1", "ballsCount": 1, "wardsNumber": 0, "levelName": "Level I", "coef": 1000, "music":"11.mp3"},
-        {"number": "2", "ballsCount": 1, "wardsNumber": 1, "levelName": "Level II", "coef": 1200, "music":"10.mp3"},
-        {"number": "3", "ballsCount": 2, "wardsNumber": 1, "levelName": "Level III", "coef": 1600, "music":"9.mp3"},
-        {"number": "4", "ballsCount": 3, "wardsNumber": 1, "levelName": "Level IV", "coef": 2400, "music":"8.mp3"},
-        {"number": "5", "ballsCount": 3, "wardsNumber": 2, "levelName": "Level V", "coef": 3200, "music":"7.mp3"},
+        {"number": "1", "ballsCount": 1, "wardsNumber": 0, "levelName": "Level I", "coef": 1000},
+        {"number": "2", "ballsCount": 1, "wardsNumber": 1, "levelName": "Level II", "coef": 1200},
+        {"number": "3", "ballsCount": 2, "wardsNumber": 1, "levelName": "Level III", "coef": 1600},
+        {"number": "4", "ballsCount": 3, "wardsNumber": 1, "levelName": "Level IV", "coef": 2400},
+        {"number": "5", "ballsCount": 3, "wardsNumber": 2, "levelName": "Level V", "coef": 3200},
     ];
 
 	var currentLavel = ParseUrl("clevel");
 	if(currentLavel === "Not found"){
 		currentLavel = 1;
 	}
-	
-	$("#music").attr("src", "music/"+ gameLavels[currentLavel-1].music);
-	var music = new Audio("music/"+ gameLavels[currentLavel-1].music);
-	music.loop = true;
-	music.play();
 	
 	//Если текущий счет не установлен, либо игра началась заново - обнуляем его.
 	if(localStorage.getItem("cScore") === null || currentLavel===1){
@@ -57,6 +52,24 @@ $(function () {
 		displayPopup("win");
 		return;
 	}
+	
+	var musicArray = [
+        {"music": "2.mp3"},
+        {"music": "3.mp3"},
+        {"music": "4.mp3"},
+        {"music": "5.mp3"},
+        {"music": "6.mp3"},
+        {"music": "7.mp3"},
+        {"music": "8.mp3"},
+        {"music": "9.mp3"},
+        {"music": "10.mp3"},
+        {"music": "11.mp3"},
+        {"music": "12.mp3"}
+    ];
+	
+	var music = new Audio("music/"+ musicArray[Math.floor((Math.random() * musicArray.length))].music);
+	music.loop = true;
+	music.play();
 	
 	
 	$("#level-name").text(gameLavels[currentLavel-1].levelName);
@@ -87,27 +100,21 @@ $(function () {
     console.log(' size(contr)=(%d,%d);',w,h);
 
     var imagesArray = [
-        {"image": "pic1.png"},
-        {"image": "pic2.png"},
+        {"image": "pic1.jpg"},
+        {"image": "pic2.jpg"},
         {"image": "pic3.jpg"},
-        {"image": "pic4.png"},
-        {"image": "pic5.png"},
-        {"image": "pic6.png"},
-        {"image": "pic7.png"},
-        {"image": "pic8.png"},
-        {"image": "pic9.png"},
-        {"image": "pic10.png"},
-        {"image": "pic11.png"},
-        {"image": "pic12.png"},
-        //{"image": "pic13.png"},
-        //{"image": "pic14.png"},
-        //{"image": "pic15.png"},
-        {"image": "pic16.png"}
-        //{"image": "pic17.png"},
-        //{"image": "pic18.png"}
+        {"image": "pic4.jpg"},
+        {"image": "pic5.jpg"},
+        {"image": "pic6.jpg"},
+        {"image": "pic7.jpg"},
+        {"image": "pic8.jpg"},
+        {"image": "pic9.jpg"},
+        {"image": "pic10.jpg"},
+        {"image": "pic11.jpg"},
+        {"image": "pic12.jpg"},
+        {"image": "pic13.jpg"}
     ];
     var nLevels = imagesArray.length;
-	//задаем рандомную картинку на старте
     var tLevel = 0;
     var nTimeLevel = 0;
     var nTimeTotal = 0;
@@ -220,7 +227,7 @@ $(function () {
             }
 			var highScore = parseInt(localStorage.getItem("hScore"));
 			var currentScore = parseInt(localStorage.getItem("cScore"));
-			if(currentScore > highScore){
+			if(currentScore === highScore){
 				$("#you-score").html("NEW RECORD: <span style='color: red;'>" + currentScore.toString().replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ') + "</span>");
 			} else {
 				$("#you-score").html("YOU SCORE: " + currentScore.toString().replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 '));
