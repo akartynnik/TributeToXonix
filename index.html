@@ -2,56 +2,116 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1"> 
         <title>Tribute 2 Qix</title>
 
-
-        <link rel="stylesheet" href="css/bootstrap.min.css">
-        <link rel="stylesheet" href="css/bootstrap-theme.min.css">
-		<link rel="stylesheet" href="css/style.css">
+		<link rel="stylesheet" href="css/index.css">
 		
     </head>
     <body>
-
-        <div class="my-container">
-            <div class="header">
-				<div class="pre-logo">Tribute 2</div>
-                <div class="logo">Qix</div>
-				<div class="statistics">
-                    Time: <span id="status-time">00:00</span><br/>
-                    Faults: <span id="status-faults">0</span> / 3<br/>
-                    Cleared: <span id="status-cleared">0</span>% / 85%
-                </div>
-                <div class="level" id="level-name"></div>
-            </div>
-
-            <div id="graphics" class="my-center"></div>
-        </div>
-
-        <script type="text/template" id="overlay-restart-template">
-            <a href="#" class="overlay start" id="restart">
-				RESTART
-			</a>
-        </script>
-		
-		
-		<script type="text/template" id="overlay-new-game-template">
-			<div class="win">
-				<span >YOU WIN</span>
-				<a href="#" class="" id="new-game">
-					PLAY AGAIN
-				</a>
+		<div style="width: 1360px; margin: 0 auto; margin-top: 50px;" class="">
+			<div style="text-align: center; font-size: 26px;">trebute to </div>
+			<div style="text-align: center; font-size: 150px; margin-bottom: 50px;">QIX</div>
+			<div style="overflow: hidden;">
+				<div style="width: 49%; float: left;">
+					<div style="padding: 0 20px;">
+						<div style="text-align: justify">
+							You should open over 85% of the hidden picture to win the level.  If you lose 3 times, you will start from the first level.
+						</div>
+					
+						<table style="margin-top: 20px;">
+							<tr>
+								<td style="width: 40px;">
+									<img src="images/inky.png" style="width: 24px;"/>
+								</td>
+								<td>
+									It's Inky. You should catch him, but don't touch him!
+								</td>
+							</tr>
+							
+							<tr>
+								<td>
+									<img src="images/blinky.png" style="width: 24px;"/>
+								</td>
+								<td>
+									It's Blinky. You should run from him.
+								</td>
+							</tr>
+						</table>
+						
+						<div style="margin-top: 20px;">
+							Control:
+						</div>
+						<table style="margin-left: 20px; margin-top: 10px;">
+							<tr>
+								<td style="width: 40px; color: red;">
+									&larr;
+								</td>
+								<td>
+									to move left
+								</td>
+							</tr>
+							<tr>
+								<td style="color: red;">
+									&rarr;
+								</td>
+								<td>
+									to move right
+								</td>
+							</tr>
+							<tr>
+								<td style="color: red;">
+									&uarr;
+								</td>
+								<td>
+									to move up
+								</td>
+							</tr>
+							
+							<tr>
+								<td style="color: red;">
+									&darr;
+								</td>
+								<td>
+									to move down
+								</td>
+							</tr>
+							
+							<tr>
+								<td style="color: red; vertical-align: top;">
+									OK
+								</td>
+								<td>
+									to confirm "New game"
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				
+				<div style="width: 49%; float: left; text-align: center;">
+					<img src="images/game.png" style="width: 500px;"/>
+				</div>
 			</div>
 			
-        </script>
-
-
-        <script src="js/jquery-1.11.1.min.js"><div</script>
-        <script src="js/underscore-min.js"></script>
-        <script src="js/bootstrap.min.js"></script>
-
-        <script  src="js/engine.js"></script>
-		<script  src="js/core.js"></script>
-       </body>
+			<div class="start">
+				PRESS "OK" TO START GAME
+			</div>
+		</div>
+		
+		<script src="js/jquery-1.11.1.min.js"></script>
+		
+		<script>
+			$(function () {
+				$(document).keydown(function(e) {
+					var key = e.which;
+					//обработка нажатия Enter
+					if(key === 13){
+						e.preventDefault();
+						e.stopPropagation();
+						window.location.href = "game.html";
+					}
+				});
+			});
+		</script>
+   </body>
 </html>
