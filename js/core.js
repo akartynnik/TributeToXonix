@@ -2,14 +2,16 @@ $(function game() {
 	var elCanvas = $('#graphics');
     var w = 1360;
 	var h = 800;
+	var HelpScore=0;
+	localStorage.setItem("Score",0);
 	
 	var gameFinish = false;
 	var gameLavels = [
-        {"number": "1", "ballsCount": 1, "wardsNumber": 0, "levelName": "Level I"},
-        {"number": "2", "ballsCount": 1, "wardsNumber": 1, "levelName": "Level II"},
-        {"number": "3", "ballsCount": 2, "wardsNumber": 1, "levelName": "Level III"},
-        {"number": "4", "ballsCount": 3, "wardsNumber": 1, "levelName": "Level IV"},
-        {"number": "5", "ballsCount": 3, "wardsNumber": 2, "levelName": "Level V"},
+        {"number": "1", "ballsCount": 1, "wardsNumber": 0, "levelName": "Level I", "coef": 1},
+        {"number": "2", "ballsCount": 1, "wardsNumber": 1, "levelName": "Level II", "coef": 1.2},
+        {"number": "3", "ballsCount": 2, "wardsNumber": 1, "levelName": "Level III", "coef": 1.4},
+        {"number": "4", "ballsCount": 3, "wardsNumber": 1, "levelName": "Level IV", "coef": 1.6},
+        {"number": "5", "ballsCount": 3, "wardsNumber": 2, "levelName": "Level V", "coef": 1.8},
     ];
 	var currentLavel = ParseUrl("clevel");
 	if(currentLavel === "Not found"){
@@ -178,7 +180,10 @@ $(function game() {
         if (!data) return false;
         var val = data.cleared;
         console.log(' val=%f',val);
+        HelpScore=val-HelpScore;
         $('#status-cleared').html(parseFloat(val).toPrecision(2));
+        Score(HelpScore,gameLavels[currentLavel-1].coef);
+        HelpScore=val;
         if (val < percentToWin) return false;
         setTimeout(function() {
             picxonix('end', true);
@@ -189,6 +194,11 @@ $(function game() {
 
 });
 
+function Score(val, coef){
+	var count=parseInt(localStorage.getItem("Score"))+val*coef;
+	localStorage.setItem("Score", count);
+	return;
+}
 
 function ParseUrl(val) {
     var result = "Not found",
