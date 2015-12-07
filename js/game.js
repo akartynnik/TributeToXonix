@@ -21,11 +21,11 @@ $(function () {
 	
 	var CurrentPercent=0;
 	var gameLavels = [
-        {"number": "1", "ballsCount": 1, "wardsNumber": 0, "levelName": "Level I", "coeff": 10},
-        {"number": "2", "ballsCount": 1, "wardsNumber": 1, "levelName": "Level II", "coeff": 12},
-        {"number": "3", "ballsCount": 2, "wardsNumber": 1, "levelName": "Level III", "coeff": 16},
-        {"number": "4", "ballsCount": 3, "wardsNumber": 1, "levelName": "Level IV", "coeff": 24},
-        {"number": "5", "ballsCount": 3, "wardsNumber": 2, "levelName": "Level V", "coeff": 32},
+        {"number": "1", "ballsCount": 1, "wardsNumber": 0, "levelName": "Level I", "coeff": 100},
+        {"number": "2", "ballsCount": 1, "wardsNumber": 1, "levelName": "Level II", "coeff": 120},
+        {"number": "3", "ballsCount": 2, "wardsNumber": 1, "levelName": "Level III", "coeff": 160},
+        {"number": "4", "ballsCount": 3, "wardsNumber": 1, "levelName": "Level IV", "coeff": 240},
+        {"number": "5", "ballsCount": 3, "wardsNumber": 2, "levelName": "Level V", "coeff": 320},
     ];
 
 	var currentLavel = ParseUrl("clevel");
