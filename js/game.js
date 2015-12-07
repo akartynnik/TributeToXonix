@@ -1,17 +1,25 @@
+/*-------------------GLOABAL FARIABLE START-----------------------*/
+/*--- Temp variables---*/
+var flag = true;
+var popup;
+var gameIsFinish = false;
+
+/*--- Config variables---*/
+var elCanvas = $('#graphics');
+var w = 1360;
+var h = 800;
+var allowedFails = 3; //default = 3
+var percentToWin = 85; //default =  85
+var canvasPopupPositionX = Math.floor((w- 700)/ 2)
+var canvasPopupPositionY = Math.floor((h- 200)/ 2);
+/*-------------------GLOABAL FARIABLE END-----------------------*/
+
 $(function () {
-	var elCanvas = $('#graphics');
-    var w = 1360;
-	var h = 800;
-	var allowedFails = 3; //default = 3
-	var percentToWin = 85; //default =  85
-	var canvasPopupPositionX = Math.floor((w- 700)/ 2)
-	var canvasPopupPositionY = Math.floor((h- 200)/ 2);
 	$("#allowed-fails").text(allowedFails);
 	$("#percent-to-win").text(percentToWin);
+	$("#pause").blink();
 	
 	var CurrentPercent=0;
-	
-	var gameFinish = false;
 	var gameLavels = [
         {"number": "1", "ballsCount": 1, "wardsNumber": 0, "levelName": "Level I", "coef": 1000},
         {"number": "2", "ballsCount": 1, "wardsNumber": 1, "levelName": "Level II", "coef": 1200},
@@ -40,16 +48,32 @@ $(function () {
 	//если игра закончена и нажат Enter или GreenButton - выходим
 	$(document).keydown(function(e) {
         var key = e.which;
-		if((key === 13 || key === 404) && gameFinish){
+		//Enter или Red Button
+		if((key === 13 || key === 404) && gameIsFinish){
 			e.preventDefault();
 			e.stopPropagation();
 			window.location.href = "index.html";
+		}
+		
+		//Enter или Blue Button - обработка паузы
+		if((key === 32 || key === 404) && !gameIsFinish){
+			e.preventDefault();
+			e.stopPropagation();
+			if(flag){
+				flag = false;
+				picxonix('play', flag);
+				DisplayPopup("pause");
+			} else {
+				flag = true;
+				picxonix('play', flag);
+				HidePopup();
+			}
 		}
     });
 	
 	//Если человек перешел на несуществующий левел, считаем что он выиграл :)
 	if(currentLavel > gameLavels.length){
-		displayPopup("win");
+		DisplayPopup("win");
 		return;
 	}
 	
@@ -180,7 +204,7 @@ $(function () {
         $('#status-faults').html(++nFaults);
         if (nFaults < allowedFails) return;
 		//показываем popup, если столкнулись больше, чем allowedFails раз (проиграли)
-		displayPopup("lose");	
+		DisplayPopup("lose");	
         picxonix('end', false);
     }
 
@@ -202,39 +226,6 @@ $(function () {
 		setTimeout(function() {NextLavelLoad(currentLavel);}, 3000);
         return true;
     }
-	
-	//Функция отображения попапа и биндинг
-	function displayPopup(loseOrWin){
-		$($('#overlay-popup-template').html())
-			.css({left: canvasPopupPositionX+'px', top:canvasPopupPositionY+'px'})
-			.appendTo(elCanvas)
-			.show();
-			
-			switch (loseOrWin) {
-                case "win": 
-                    $("#you-lose").css("display","none");
-					$("#you-win").css("display","block"); 
-					$("#you-lose-btn").css("display","none");
-					$("#you-win-btn").css("display","block");
-					break;
-                case "lose": 
-                    $("#you-lose").css("display","block");
-					$("#you-win").css("display","none");
-                    $("#you-lose-btn").css("display","block");
-					$("#you-win-btn").css("display","none");
-					break;
-                default:
-            }
-			var highScore = parseInt(localStorage.getItem("hScore"));
-			var currentScore = parseInt(localStorage.getItem("cScore"));
-			if(currentScore === highScore){
-				$("#your-score").html("NEW RECORD: <span style='color: red;'>" + currentScore.toString().replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ') + "</span>");
-			} else {
-				$("#your-score").html("YOUR SCORE: " + currentScore.toString().replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 '));
-			}
-			gameFinish = true;	
-	}
-
 });
 
 
@@ -284,7 +275,69 @@ function NextLavelLoad(cLevel){
 	window.location.href = url;
 }
 
-function RestartStartGame(){
+function RestartGame(){
 	window.location.href = "index.html";
+}
+
+function PauseGame(){
+	flag = false;
+	picxonix('play', flag);
+	DisplayPopup("pause");
+}
+
+function StartGame(){
+	flag = true;
+	picxonix('play', flag);
+	HidePopup();
+}
+
+function HidePopup(){
+	popup.hide();
+}
+
+function DisplayPopup(loseOrWin){
+	popup = $('#popup')
+		.css({left: canvasPopupPositionX+'px', top:canvasPopupPositionY+'px'})
+		.appendTo(elCanvas)
+		.show();
+	switch (loseOrWin) {
+		case "win": 
+			$("#you-lose").css("display","none");
+			$("#you-win").css("display","block"); 
+			$("#pause").css("display","none");
+			$("#your-score").css("display","block");
+			$("#you-win-btn").css("display","block");
+			$("#pause-btn").css("display","none");
+			$("#you-lose-btn").css("display","none");
+			gameIsFinish = true;	
+			break;
+		case "lose": 
+			$("#you-lose").css("display","block");
+			$("#you-win").css("display","none");
+			$("#pause").css("display","none");
+			$("#your-score").css("display","block");
+			$("#you-lose-btn").css("display","block");
+			$("#pause-btn").css("display","none");
+			$("#you-win-btn").css("display","none");
+			gameIsFinish = true;	
+			break;
+		case "pause": 
+			$("#pause").css("display","block");
+			$("#you-lose").css("display","none");
+			$("#you-win").css("display","none");
+			$("#your-score").css("display","none");
+			$("#pause-btn").css("display","block");
+			$("#you-lose-btn").css("display","none");
+			$("#you-win-btn").css("display","none");
+			break;
+		default:
+	}
+	var highScore = parseInt(localStorage.getItem("hScore"));
+	var currentScore = parseInt(localStorage.getItem("cScore"));
+	if(currentScore === highScore){
+		$("#your-score").html("NEW RECORD: <span style='color: red;'>" + currentScore.toString().replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ') + "</span>");
+	} else {
+		$("#your-score").html("YOUR SCORE: " + currentScore.toString().replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 '));
+	}
 }
     

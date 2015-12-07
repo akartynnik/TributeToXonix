@@ -103,8 +103,8 @@ div.my-container {
 	color: lightblue;
 }
 
-.popup {
-	display: inline-block; 
+#popup {
+	display: none; 
 	position: absolute; 
 	width: 700px;
 	border: 16px solid white;
@@ -113,14 +113,14 @@ div.my-container {
 	text-align: center;
 }
 
-.popup .popup-header{
+#popup .popup-header{
 	font-size: 50px;
 	font-family: "Qix Large";
 	display: inline-block;
 	width: 100%;
 }
 
-.popup #your-score{
+#popup #your-score{
 	font-size: 26px;
 	font-family: "Qix Large";
 	display: inline-block;
@@ -129,7 +129,7 @@ div.my-container {
 	padding-top: 15px;
 }
 
-.popup a {
+#popup a {
 	font-family: "Qix Large";
 	font-size: 25px;
 	color: #E2322F;
@@ -138,8 +138,8 @@ div.my-container {
 	text-decoration: none !important;
 }
 
-.popup a:hover,
-.popup a:active {
+#popup a:hover,
+#popup a:active {
 	color: #2A6496;
 	text-decoration: none !important;
 }
