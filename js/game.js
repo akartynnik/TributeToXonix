@@ -228,9 +228,9 @@ $(function () {
 			var highScore = parseInt(localStorage.getItem("hScore"));
 			var currentScore = parseInt(localStorage.getItem("cScore"));
 			if(currentScore === highScore){
-				$("#you-score").html("NEW RECORD: <span style='color: red;'>" + currentScore.toString().replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ') + "</span>");
+				$("#your-score").html("NEW RECORD: <span style='color: red;'>" + currentScore.toString().replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ') + "</span>");
 			} else {
-				$("#you-score").html("YOU SCORE: " + currentScore.toString().replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 '));
+				$("#your-score").html("YOUR SCORE: " + currentScore.toString().replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 '));
 			}
 			gameFinish = true;	
 	}
