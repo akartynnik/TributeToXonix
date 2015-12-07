@@ -21,11 +21,11 @@ $(function () {
 	
 	var CurrentPercent=0;
 	var gameLavels = [
-        {"number": "1", "ballsCount": 1, "wardsNumber": 0, "levelName": "Level I", "coef": 1000},
-        {"number": "2", "ballsCount": 1, "wardsNumber": 1, "levelName": "Level II", "coef": 1200},
-        {"number": "3", "ballsCount": 2, "wardsNumber": 1, "levelName": "Level III", "coef": 1600},
-        {"number": "4", "ballsCount": 3, "wardsNumber": 1, "levelName": "Level IV", "coef": 2400},
-        {"number": "5", "ballsCount": 3, "wardsNumber": 2, "levelName": "Level V", "coef": 3200},
+        {"number": "1", "ballsCount": 1, "wardsNumber": 0, "levelName": "Level I", "coeff": 10},
+        {"number": "2", "ballsCount": 1, "wardsNumber": 1, "levelName": "Level II", "coeff": 12},
+        {"number": "3", "ballsCount": 2, "wardsNumber": 1, "levelName": "Level III", "coeff": 16},
+        {"number": "4", "ballsCount": 3, "wardsNumber": 1, "levelName": "Level IV", "coeff": 24},
+        {"number": "5", "ballsCount": 3, "wardsNumber": 2, "levelName": "Level V", "coeff": 32},
     ];
 
 	var currentLavel = ParseUrl("clevel");
@@ -217,7 +217,7 @@ $(function () {
         console.log(' val=%f',val);
         CurrentPercent = val - CurrentPercent; //величина отрезанного блока в процентах
         $('#status-cleared').html(parseFloat(val).toPrecision(2));
-        Score(CurrentPercent, gameLavels[currentLavel-1].coef);
+        Score(CurrentPercent, gameLavels[currentLavel-1].coeff);
         CurrentPercent = val;
         if (val < percentToWin) return false;
         setTimeout(function() {
@@ -231,13 +231,14 @@ $(function () {
 
 /* ----------------------- GLOBAL FUNCTIONS -------------------------*/
 
-function Score(val, coef){
+function Score(val, coeff){
 	var time =$("#status-time");
 	var minutes = parseInt(time.text().split(":")[0]);
 	var seconds = parseInt(time.text().split(":")[1]);
-	var secondsFromStartLevel = (minutes*60)+seconds;
+	var secondsFromStartLevel = minutes*60+seconds
+	var timeCoeff = Math.round((secondsFromStartLevel/30))+1;
 	
-	var currentScore=Math.round(parseInt(localStorage.getItem("cScore"))+(val*coef)/secondsFromStartLevel);
+	var currentScore=Math.round(parseInt(localStorage.getItem("cScore"))+(val*coeff)/timeCoeff);
 	localStorage.setItem("cScore", currentScore);
 	$("#c_score").text(currentScore.toString().replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 '));
 	
