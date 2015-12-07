@@ -1,8 +1,10 @@
 /*-------------------GLOABAL FARIABLE START-----------------------*/
 /*--- Temp variables---*/
 var flag = true;
-var popup;
+var popup = null;
 var gameIsFinish = false;
+var currentPercent=0;
+var currentLevel = ParseUrl("clevel");
 
 /*--- Config variables---*/
 var elCanvas = $('#graphics');
@@ -12,72 +14,17 @@ var allowedFails = 3; //default = 3
 var percentToWin = 85; //default =  85
 var canvasPopupPositionX = Math.floor((w- 700)/ 2)
 var canvasPopupPositionY = Math.floor((h- 200)/ 2);
-/*-------------------GLOABAL FARIABLE END-----------------------*/
 
-$(function () {
-	$("#allowed-fails").text(allowedFails);
-	$("#percent-to-win").text(percentToWin);
-	$("#pause").blink();
-	
-	var CurrentPercent=0;
-	var gameLavels = [
+/*--- Arrays of elemens ---*/
+var levels = [
         {"number": "1", "ballsCount": 1, "wardsNumber": 0, "levelName": "Level I", "coeff": 100},
         {"number": "2", "ballsCount": 1, "wardsNumber": 1, "levelName": "Level II", "coeff": 120},
         {"number": "3", "ballsCount": 2, "wardsNumber": 1, "levelName": "Level III", "coeff": 160},
-        {"number": "4", "ballsCount": 3, "wardsNumber": 1, "levelName": "Level IV", "coeff": 240},
+        {"number": "4", "ballsCount": 2, "wardsNumber": 2, "levelName": "Level IV", "coeff": 240},
         {"number": "5", "ballsCount": 3, "wardsNumber": 2, "levelName": "Level V", "coeff": 320},
     ];
-
-	var currentLavel = ParseUrl("clevel");
-	if(currentLavel === "Not found"){
-		currentLavel = 1;
-	}
 	
-	//Если текущий счет не установлен, либо игра началась заново - обнуляем его.
-	if(localStorage.getItem("cScore") === null || currentLavel===1){
-		localStorage.setItem("cScore",0);
-	} 
-	
-	if(localStorage.getItem("hScore") === null){
-		localStorage.setItem("hScore",0);
-	} 
-	
-	$("#h_score").text(localStorage.getItem("hScore").replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 '));
-	$("#c_score").text(localStorage.getItem("cScore").replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 '));
-	
-	//если игра закончена и нажат Enter или GreenButton - выходим
-	$(document).keydown(function(e) {
-        var key = e.which;
-		//Enter или Red Button
-		if((key === 13 || key === 404) && gameIsFinish){
-			e.preventDefault();
-			e.stopPropagation();
-			window.location.href = "index.html";
-		}
-		
-		//Enter или Blue Button - обработка паузы
-		if((key === 32 || key === 404) && !gameIsFinish){
-			e.preventDefault();
-			e.stopPropagation();
-			if(flag){
-				flag = false;
-				picxonix('play', flag);
-				DisplayPopup("pause");
-			} else {
-				flag = true;
-				picxonix('play', flag);
-				HidePopup();
-			}
-		}
-    });
-	
-	//Если человек перешел на несуществующий левел, считаем что он выиграл :)
-	if(currentLavel > gameLavels.length){
-		DisplayPopup("win");
-		return;
-	}
-	
-	var musicArray = [
+var levelMusicsArray = [
         {"music": "2.mp3"},
         {"music": "3.mp3"},
         {"music": "4.mp3"},
@@ -89,21 +36,91 @@ $(function () {
         {"music": "10.mp3"},
         {"music": "11.mp3"},
         {"music": "12.mp3"}
-    ];
+    ];	
 	
-	var music = new Audio("music/"+ musicArray[Math.floor((Math.random() * musicArray.length))].music);
+var levelImagesArray = [
+        {"image": "pic1.jpg"},
+        {"image": "pic2.jpg"},
+        {"image": "pic3.jpg"},
+        {"image": "pic4.jpg"},
+        {"image": "pic5.jpg"},
+        {"image": "pic6.jpg"},
+        {"image": "pic7.jpg"},
+        {"image": "pic8.jpg"},
+        {"image": "pic9.jpg"},
+        {"image": "pic10.jpg"},
+        {"image": "pic11.jpg"},
+        {"image": "pic12.jpg"},
+        {"image": "pic13.jpg"}
+    ];
+/*-------------------GLOABAL FARIABLE END-----------------------*/
+
+
+/*------------------- KEY PRESS PROCESSOR START -------------------------*/
+$(document).keydown(function(e) {
+	var key = e.which;
+	//Enter или Red Button и игра закончена  - выходим
+	if((key === 13 || key === 404) && gameIsFinish){
+		e.preventDefault();
+		e.stopPropagation();
+		window.location.href = "index.html";
+	}
+	
+	//Enter или Blue Button - обработка паузы
+	if((key === 32 || key === 404) && !gameIsFinish){
+		e.preventDefault();
+		e.stopPropagation();
+		if(flag){
+			flag = false;
+			picxonix('play', flag);
+			DisplayPopup("pause");
+		} else {
+			flag = true;
+			picxonix('play', flag);
+			HidePopup();
+		}
+	}
+});
+/*------------------- KEY PRESS PROCESSOR START -------------------------*/
+
+
+$(function () {
+	if(currentLevel === "Not found"){
+		currentLevel = 1;
+	}
+	
+	//Set current score and hight score to local storage
+	if(localStorage.getItem("cScore") === null || currentLevel===1)
+		localStorage.setItem("cScore",0);
+	if(localStorage.getItem("hScore") === null)
+		localStorage.setItem("hScore",0);
+	
+	$("#allowed-fails").text(allowedFails);
+	$("#percent-to-win").text(percentToWin);
+	$("#pause").blink();
+	$("#h_score").text(localStorage.getItem("hScore").replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 '));
+	$("#c_score").text(localStorage.getItem("cScore").replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 '));
+	if(currentLevel <= levels.length){
+		$("#level-name").text(levels[currentLevel-1].levelName);
+	}
+	
+	//Если человек перешел на несуществующий левел, считаем что он выиграл :)
+	if(currentLevel > levels.length){
+		DisplayPopup("win");
+		return;
+	}
+	
+	//Запуск фоновой музыки
+	var music = new Audio("music/"+ levelMusicsArray[Math.floor((Math.random() * levelMusicsArray.length))].music);
 	music.loop = true;
 	music.play();
 	
-	
-	$("#level-name").text(gameLavels[currentLavel-1].levelName);
-	
-	
+	//Game core initialization
     var size = picxonix(elCanvas[0], {
         width: w,
         height: h,
-        nBalls: gameLavels[currentLavel-1].ballsCount,
-        nWarders: gameLavels[currentLavel-1].wardsNumber,
+        nBalls: levels[currentLevel-1].ballsCount,
+        nWarders: levels[currentLevel-1].wardsNumber,
         speedCursor: 7,
         callback: function(iEvent) {
             switch (iEvent) {
@@ -119,26 +136,8 @@ $(function () {
         callbackOnFrame: true
     });
     if (!size) return;
-
     elCanvas.css({width: w, height: h});
-    console.log(' size(contr)=(%d,%d);',w,h);
-
-    var imagesArray = [
-        {"image": "pic1.jpg"},
-        {"image": "pic2.jpg"},
-        {"image": "pic3.jpg"},
-        {"image": "pic4.jpg"},
-        {"image": "pic5.jpg"},
-        {"image": "pic6.jpg"},
-        {"image": "pic7.jpg"},
-        {"image": "pic8.jpg"},
-        {"image": "pic9.jpg"},
-        {"image": "pic10.jpg"},
-        {"image": "pic11.jpg"},
-        {"image": "pic12.jpg"},
-        {"image": "pic13.jpg"}
-    ];
-    var nLevels = imagesArray.length;
+    var nLevels = levelImagesArray.length;
     var tLevel = 0;
     var nTimeLevel = 0;
     var nTimeTotal = 0;
@@ -170,8 +169,8 @@ $(function () {
 
 
     function preloadLevel() {
-		var randomImageNumber = Math.floor((Math.random() * imagesArray.length));
-        oLevel = imagesArray[randomImageNumber];
+		var randomImageNumber = Math.floor((Math.random() * levelImagesArray.length));
+        oLevel = levelImagesArray[randomImageNumber];
         var img = new Image();
         img.src = oLevel.image = 'images/'+oLevel.image;
     }
@@ -215,15 +214,15 @@ $(function () {
         if (!data) return false;
         var val = data.cleared;
         console.log(' val=%f',val);
-        CurrentPercent = val - CurrentPercent; //величина отрезанного блока в процентах
+        currentPercent = val - currentPercent; //величина отрезанного блока в процентах
         $('#status-cleared').html(parseFloat(val).toPrecision(2));
-        Score(CurrentPercent, gameLavels[currentLavel-1].coeff);
-        CurrentPercent = val;
+        Score(currentPercent, levels[currentLevel-1].coeff);
+        currentPercent = val;
         if (val < percentToWin) return false;
         setTimeout(function() {
             picxonix('end', true);
         }, 200);
-		setTimeout(function() {NextLavelLoad(currentLavel);}, 3000);
+		setTimeout(function() {NextLavelLoad(currentLevel);}, 3000);
         return true;
     }
 });

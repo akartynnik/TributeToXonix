@@ -1,5 +1,5 @@
 /**
- * PicXonix
+ * We use part of game mechanics by "PicXonix"
  * https://github.com/hindmost/picxonix
  * @author   Savr Goryaev
  * @license  MIT http://www.opensource.org/licenses/MIT
