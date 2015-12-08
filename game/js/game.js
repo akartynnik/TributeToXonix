@@ -131,7 +131,7 @@ $(document).keydown(function(e) {
 		}
 	}
 	
-	if(key === 403){
+	if((key === 73 || key === 403) && !gameIsFinish){
 		e.preventDefault();
 		e.stopPropagation();
 		if(flag){
