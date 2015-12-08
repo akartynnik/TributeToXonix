@@ -146,13 +146,3 @@ a {
 	border-bottom: 4px dotted red;
 	padding-bottom:5px;
 }
-
-.underlined-back {
-	border-bottom: 4px dotted gray;
-	padding-bottom:5px;
-}
-
-#debug-info{
-	margin-top: 30px;
-	text-align: center;
-}

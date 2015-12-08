@@ -131,6 +131,7 @@ div.my-container {
 #popup a {
 	font-family: "Qix Large";
 	font-size: 25px;
+	line-height: 32px;
 	color: #E2322F;
 	display: inline-block;
 	width: 100%;

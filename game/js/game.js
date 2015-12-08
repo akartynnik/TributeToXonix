@@ -141,7 +141,7 @@ $(document).keydown(function(e) {
 		}
 	}
 	
-	if ((key === 8 && !$(e.target).is("input, textarea")) || key === 27) {
+	if ((key === 8 && !$(e.target).is("input, textarea")) || key === 27 || key === 461) {
         e.preventDefault();
 		e.stopPropagation();
 		if(!backPressed){

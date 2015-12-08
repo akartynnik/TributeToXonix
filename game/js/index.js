@@ -1,7 +1,6 @@
 $(function () {
 	$(document).keydown (function(e) {
 		var key = e.which;
-		//��������� ������� Enter
 		if(key === 13 || key === 404){
 			e.preventDefault();
 			e.stopPropagation();
@@ -43,14 +42,6 @@ $(function () {
 			e.stopPropagation();
 			$("#btn-red").addClass("underlined-red");
 		}
-		
-		if ((key === 8 || key === 27) && !$(e.target).is("input, textarea")) {
-			e.preventDefault();
-			e.stopPropagation();
-			$("#btn-back").addClass("underlined-back");
-		}
-		
-		$("#debug-info").text("key pressed: " + key );
 	});
 	
 	$(document).keyup (function(e) {
@@ -91,14 +82,5 @@ $(function () {
 			e.stopPropagation();
 			$("#btn-red").removeClass("underlined-red");
 		}
-		
-		if ((key === 8 || key === 27)  && !$(e.target).is("input, textarea")) {
-			e.preventDefault();
-			e.stopPropagation();
-			$("#btn-back").removeClass("underlined-back");
-		}
-		
-		
-		$("#debug-info").text("");
 	});
 });
