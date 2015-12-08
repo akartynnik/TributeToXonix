@@ -152,13 +152,13 @@ $(document).keydown(function(e) {
 	}
 	
 	//Если не открыт ни один попап и нажата BACK BTN и мы еще играем - вызываем GameInfoShow()
-	if (((key === 8 && !$(e.target).is("input, textarea")) || key === 27) && openPopupType === null && gameStatus === "play") {
+	if ((key === 8 || key === 27) && openPopupType === null && gameStatus === "play") {
 		BackPopupShow();
 		return false;
 	}
 	
 	//Если открыт попап "back" и нажата BACK BTN и мы еще играем - вызываем GameInfoHide() 
-	if (((key === 8 && !$(e.target).is("input, textarea")) || key === 27) && openPopupType === "back" && gameStatus === "play") {
+	if ((key === 8 || key === 27) && openPopupType === "back" && gameStatus === "play") {
 		BackPopupHide();
 		return false;
 	}
@@ -202,29 +202,29 @@ elCanvas.click(function(e) {
 /*------------------- MOUSE CLICK PROCESSOR END -------------------------*/
 
 
-
 $(function () {
 	if(currentLevel === "Not found"){
 		currentLevel = 1;
 	}
+	
+	//Инициализация и установка current score и high score в local-storage
+	if(localStorage.getItem("cScore") === null || currentLevel===1)
+		localStorage.setItem("cScore",0);
+	if(localStorage.getItem("hScore") === null)
+		localStorage.setItem("hScore",0);
+	
+	$("#allowed-fails").text(allowedFails);
+	$("#percent-to-win").text(percentToWin);
+	$("#pause").blink();
+	$("#h_score").text(localStorage.getItem("hScore").replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 '));
+	$("#c_score").text(localStorage.getItem("cScore").replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 '));
+	if(currentLevel <= levels.length){
+		$("#level-name").html(levels[currentLevel-1].levelName);
+	}
+		
 	if(typeof levels[(currentLevel - 1)] === 'undefined'){
 		FinishGame();
 	} else {
-		//Инициализация и установка current score и high score в local-storage
-		if(localStorage.getItem("cScore") === null || currentLevel===1)
-			localStorage.setItem("cScore",0);
-		if(localStorage.getItem("hScore") === null)
-			localStorage.setItem("hScore",0);
-		
-		$("#allowed-fails").text(allowedFails);
-		$("#percent-to-win").text(percentToWin);
-		$("#pause").blink();
-		$("#h_score").text(localStorage.getItem("hScore").replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 '));
-		$("#c_score").text(localStorage.getItem("cScore").replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 '));
-		if(currentLevel <= levels.length){
-			$("#level-name").html(levels[currentLevel-1].levelName);
-		}
-
 		//Инициализация музыки
 		if(typeof levels[currentLevel-1].lavelMusic !== 'undefined')
 			currentMusicFileName = levels[currentLevel-1].lavelMusic;
@@ -306,6 +306,7 @@ function FinishGame() {
 	musicWin = new Audio("music/win.mp3");
 	musicWin.loop = true;
 	musicWin.play();
+	SetHighScore();
 	ShowPopup("win");
 }
 
@@ -325,6 +326,7 @@ function RaiseFaults() {
 	if (currentNumberFaults < allowedFails) 
 		return;
 	//показываем popup lose, если столкнулись больше, чем allowedFails раз
+	SetHighScore();
 	ShowPopup("lose");
 	picxonix('end', false);
 }
@@ -373,14 +375,17 @@ function CalculateScore(cleared, coeff){
 	var currentScore=Math.round(parseInt(localStorage.getItem("cScore"))+(diff*coeff)/timeCoeff);
 	localStorage.setItem("cScore", currentScore);
 	$("#c_score").text(currentScore.toString().replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 '));
-	
+	previousCleared = cleared;
+	return;
+}
+
+function SetHighScore(){
+	var currentScore = parseInt(localStorage.getItem("cScore"));
 	var highScore = parseInt(localStorage.getItem("hScore"));
 	if(currentScore>highScore){
 		localStorage.setItem("hScore",currentScore);
 		$("#h_score").text(currentScore.toString().replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 '));
 	}
-	previousCleared = cleared;
-	return;
 }
 
 function ParseUrl(val) {

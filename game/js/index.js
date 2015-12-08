@@ -37,7 +37,7 @@ $(function () {
 			$("#btn-blue").addClass("underlined-blue");
 		}
 		
-		if(key === 29 || key === 403){
+		if(key === 73 || key === 403){
 			e.preventDefault();
 			e.stopPropagation();
 			$("#btn-red").addClass("underlined-red");
@@ -77,7 +77,7 @@ $(function () {
 			$("#btn-blue").removeClass("underlined-blue");
 		}
 		
-		if(key === 403){
+		if(key === 73 || key === 403){
 			e.preventDefault();
 			e.stopPropagation();
 			$("#btn-red").removeClass("underlined-red");
