@@ -1,0 +1,147 @@
+@font-face {
+    font-family: "Qix Large";
+    src: url(../fonts/qix-large.ttf);
+}
+
+@font-face {
+    font-family: "Qix Small";
+    src: url(../fonts/qix-small.ttf);
+}
+
+body {
+	background-color: #000; 
+	color: #ffffff;
+	font-family: "Qix Small";
+	font-size: 20px;
+	line-height: 30px;
+}
+
+.container{
+	width: 1360px; 
+	margin: 0 auto; 
+	margin-top: 20px;
+}
+
+.pre-logo{
+	text-align: center; 
+	font-size: 26px;
+}
+
+.logo {
+	text-align: center; 
+	font-size: 100px; 
+	margin-bottom: 10px; 
+	line-height: 180px;
+	font-family: "Qix Large";
+}
+
+.rules{
+	text-align: justify;
+}
+
+.left-block{
+	width: 49%; 
+	float: left;
+}
+
+.right-block{
+	width: 49%; 
+	float: left; 
+	text-align: center;
+}
+
+.enemy-table{
+	margin-top: 20px;
+}
+
+.enemy-table td.enemy {
+	width: 40px;
+}
+
+.enemy-table td.enemy img{
+	width: 24px;
+}
+
+.controls{
+	margin-top: 20px;
+}
+
+.controls-table{
+	margin-left: 20px; 
+	margin-top: 10px;
+}
+
+.controls-table td.button {
+	width: 40px; 
+	color: red; 
+	font-weight: bolder; 
+	font-size: 24px;
+}
+
+.buttons-table{
+	margin-left: 25px;
+}
+
+.buttons-table td.button-green {
+	color: green; 
+	vertical-align: top; 
+	width: 180px;
+}
+
+.buttons-table td.button-blue {
+	color: blue; 
+	vertical-align: top; 
+	width: 180px;
+}
+
+.buttons-table td.button-back {
+	color: gray; 
+	vertical-align: top; 
+	width: 180px;
+}
+
+.game-start{
+	text-align: center;
+	color: #F73936;
+	margin-top: 50px;
+}
+
+.game-image{
+	width: 700px;
+}
+
+a {
+	font-family: "Qix Large";
+	font-size: 33px;
+	color: #E2322F;
+	text-decoration: none !important;
+}
+
+.here:hover,
+.here:active{
+	color: yellow;
+	text-decoration: none !important;
+}
+
+.green{
+	color: green;
+}
+
+.selected {
+	color: yellow;
+}
+
+.underlined-blue {
+	border-bottom: 4px dotted blue;
+	padding-bottom:5px;
+}
+
+.underlined-back {
+	border-bottom: 4px dotted gray;
+	padding-bottom:5px;
+}
+
+#debug-info{
+	margin-top: 30px;
+	text-align: senter;
+}

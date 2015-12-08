@@ -2,30 +2,24 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Tribute to Qix</title>
-
+        <title>Tribute to Xonix</title>
 		<link rel="stylesheet" href="css/index.css">		
-		
     </head>
     <body>
-	
-		<audio autoplay loop>  
-				<source src="music/index.mp3">
-		</audio>
-		<div style="width: 1360px; margin: 0 auto; margin-top: 30px;" class="">
-			<div style="text-align: center; font-size: 26px;">tribute to </div>
-			<div style="text-align: center; font-size: 150px; margin-bottom: 20px; line-height: 180px;">QIX</div>
+		<div class="container">
+			<div class="pre-logo">tribute to </div>
+			<div class="logo">Xonix</div>
 			<div style="overflow: hidden;">
-				<div style="width: 49%; float: left;">
+				<div class="left-block">
 					<div style="padding: 0 20px;">
-						<div style="text-align: justify">
+						<div class="rules">
 							You should open over 85% of the hidden picture to win the level.  If you lose 3 times, you will start from the first level.
 						</div>
 					
-						<table style="margin-top: 20px;">
+						<table class="enemy-table">
 							<tr>
-								<td style="width: 40px;">
-									<img src="images/inky.png" style="width: 24px;"/>
+								<td class="enemy">
+									<img src="images/inky.png"/>
 								</td>
 								<td>
 									It's Inky. You should catch him, but don't touch him!
@@ -33,8 +27,8 @@
 							</tr>
 							
 							<tr>
-								<td>
-									<img src="images/blinky.png" style="width: 24px;"/>
+								<td class="enemy">
+									<img src="images/blinky.png"/>
 								</td>
 								<td>
 									It's Blinky. You should run from him.
@@ -42,12 +36,12 @@
 							</tr>
 						</table>
 						
-						<div style="margin-top: 20px;">
+						<div class="controls">
 							Controls:
 						</div>
-						<table style="margin-left: 20px; margin-top: 10px;">
+						<table class="controls-table">
 							<tr>
-								<td style="width: 40px; color: red; font-weight: bolder; font-size: 24px;">
+								<td class="button">
 									<span id="left">&#9668;</span>
 								</td>
 								<td>
@@ -55,7 +49,7 @@
 								</td>
 							</tr>
 							<tr>
-								<td style="color: red; font-weight: bolder; font-size: 24px;">
+								<td class="button">
 									<span id="right">&#9658;</span>
 								</td>
 								<td>
@@ -63,7 +57,7 @@
 								</td>
 							</tr>
 							<tr>
-								<td style="color: red; font-weight: bolder; font-size: 24px;">
+								<td class="button">
 									<span id="up">&#9650;</span>
 								</td>
 								<td>
@@ -72,7 +66,7 @@
 							</tr>
 							
 							<tr>
-								<td style="color: red; font-weight: bolder; font-size: 24px;">
+								<td class="button">
 									<span id="down">&#9660;</span>
 								</td>
 								<td>
@@ -81,10 +75,10 @@
 							</tr>
 						</table>
 						
-						<table style="margin-left: 25px;">
+						<table class="buttons-table">
 							<tr>
-								<td style="color: green; vertical-align: top; width: 180px;">
-									GREEN BTN
+								<td class="button-green">
+									<span id="btn-green">GREEN BTN</span>
 								</td>
 								<td>
 									confirm "New game"<br/>
@@ -93,26 +87,40 @@
 							</tr>
 							
 							<tr>
-								<td style="color: blue; vertical-align: top;">
-									BLUE BTN
+								<td class="button-blue">
+									<span id="btn-blue">BLUE BTN</span>
 								</td>
 								<td>
 									pause
+								</td>
+							</tr>
+							
+							<tr>
+								<td class="button-back">
+									<span id="btn-back">BACK BTN</span>
+								</td>
+								<td>
+									start new game
 								</td>
 							</tr>
 						</table>
 					</div>
 				</div>
 				
-				<div style="width: 49%; float: left; text-align: center;">
-					<img src="images/game.jpg" style="width: 700px;"/>
+				<div class="right-block">
+					<img src="images/game.jpg" class="game-image"/>
+					<div id="debug-info"></div>
 				</div>
 			</div>
 			
-			<div class="start">
-				<a href="game.html">PRESS ME OR <span class="green">GREEN BUTTON</span> TO START GAME</a>
+			<div class="game-start">
+				<a href="game.html">PRESS <span class="here">HERE</span> OR <span class="green">GREEN BUTTON</span> TO START GAME</a>
 			</div>
 		</div>
+		
+		<audio autoplay loop>  
+			<source src="music/index.mp3">
+		</audio>
 		
 		<script src="js/jquery-1.11.1.min.js"></script>
 		<script src="js/index.js"></script>

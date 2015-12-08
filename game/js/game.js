@@ -5,6 +5,7 @@ var popup = null;
 var gameIsFinish = false;
 var currentPercent=0;
 var currentLevel = ParseUrl("clevel");
+var backPressed = false;
 
 /*--- Config variables---*/
 var elCanvas = $('#graphics');
@@ -21,7 +22,10 @@ var levels = [
         {"number": "2", "ballsCount": 1, "wardsNumber": 1, "levelName": "Level II", "coeff": 120},
         {"number": "3", "ballsCount": 2, "wardsNumber": 1, "levelName": "Level III", "coeff": 160},
         {"number": "4", "ballsCount": 2, "wardsNumber": 2, "levelName": "Level IV", "coeff": 240},
-        {"number": "5", "ballsCount": 3, "wardsNumber": 2, "levelName": "Level V", "coeff": 320},
+        {"number": "3", "ballsCount": 1, "wardsNumber": 1, "levelName": "BONUS LEVEL: MARIO", "coeff": 500},
+        {"number": "5", "ballsCount": 3, "wardsNumber": 2, "levelName": "Level VI", "coeff": 320},
+        {"number": "5", "ballsCount": 4, "wardsNumber": 2, "levelName": "Level VII", "coeff": 480},
+        {"number": "5", "ballsCount": 5, "wardsNumber": 2, "levelName": "Level VIIL", "coeff": 800},
     ];
 	
 var levelMusicsArray = [
@@ -59,27 +63,37 @@ var levelImagesArray = [
 /*------------------- KEY PRESS PROCESSOR START -------------------------*/
 $(document).keydown(function(e) {
 	var key = e.which;
-	//Enter или Red Button и игра закончена  - выходим
-	if((key === 13 || key === 404) && gameIsFinish){
+	//Enter или Red Button и игра закончена или нажата back btn (показан попап выхода в меню)  - выходим
+	if((key === 13 || key === 404) && (gameIsFinish || backPressed)){
 		e.preventDefault();
 		e.stopPropagation();
 		window.location.href = "index.html";
 	}
 	
 	//Enter или Blue Button - обработка паузы
-	if((key === 32 || key === 404) && !gameIsFinish){
+	if((key === 32 || key === 406) && !gameIsFinish){
 		e.preventDefault();
 		e.stopPropagation();
 		if(flag){
 			flag = false;
-			picxonix('play', flag);
 			DisplayPopup("pause");
 		} else {
 			flag = true;
-			picxonix('play', flag);
 			HidePopup();
 		}
 	}
+	
+	if ((key === 8 && !$(e.target).is("input, textarea")) || key === 27) {
+        e.preventDefault();
+		e.stopPropagation();
+		if(!backPressed){
+			DisplayPopup("new-game");
+			backPressed = true;
+		} else {
+			HidePopup();
+			backPressed = false;
+		}
+    }
 });
 /*------------------- KEY PRESS PROCESSOR START -------------------------*/
 
@@ -188,7 +202,6 @@ $(function () {
     function updateTime() {
         var n = Math.floor((Date.now() - tLevel) / 1000);
         if (n - nTimeLevel < 1) return;
-        console.log('updateTime(): nTimeLevel=%d(%d)',n,nTimeLevel);
         nTimeLevel = n;
         function str_pad(s) {
             return Array(3 - s.length).join('0') + s;
@@ -229,7 +242,6 @@ $(function () {
 
 
 /* ----------------------- GLOBAL FUNCTIONS -------------------------*/
-
 function Score(val, coeff){
 	var time =$("#status-time");
 	var minutes = parseInt(time.text().split(":")[0]);
@@ -293,9 +305,11 @@ function StartGame(){
 
 function HidePopup(){
 	popup.hide();
+	picxonix('play', true);
 }
 
 function DisplayPopup(loseOrWin){
+	picxonix('play', false);
 	popup = $('#popup')
 		.css({left: canvasPopupPositionX+'px', top:canvasPopupPositionY+'px'})
 		.appendTo(elCanvas)
@@ -305,30 +319,47 @@ function DisplayPopup(loseOrWin){
 			$("#you-lose").css("display","none");
 			$("#you-win").css("display","block"); 
 			$("#pause").css("display","none");
+			$("#new-game").css("display","none");
 			$("#your-score").css("display","block");
 			$("#you-win-btn").css("display","block");
 			$("#pause-btn").css("display","none");
 			$("#you-lose-btn").css("display","none");
+			$("#new-game-btn").css("display","none");
 			gameIsFinish = true;	
 			break;
 		case "lose": 
 			$("#you-lose").css("display","block");
 			$("#you-win").css("display","none");
 			$("#pause").css("display","none");
+			$("#new-game").css("display","none");
 			$("#your-score").css("display","block");
 			$("#you-lose-btn").css("display","block");
-			$("#pause-btn").css("display","none");
 			$("#you-win-btn").css("display","none");
+			$("#pause-btn").css("display","none");
+			$("#new-game-btn").css("display","none");
 			gameIsFinish = true;	
 			break;
 		case "pause": 
-			$("#pause").css("display","block");
 			$("#you-lose").css("display","none");
 			$("#you-win").css("display","none");
+			$("#pause").css("display","block");
+			$("#new-game").css("display","none");
 			$("#your-score").css("display","none");
-			$("#pause-btn").css("display","block");
 			$("#you-lose-btn").css("display","none");
 			$("#you-win-btn").css("display","none");
+			$("#pause-btn").css("display","block");
+			$("#new-game-btn").css("display","none");
+			break;
+		case "new-game": 
+			$("#you-lose").css("display","none");
+			$("#you-win").css("display","none");
+			$("#pause").css("display","none");
+			$("#new-game").css("display","block");
+			$("#your-score").css("display","none");
+			$("#you-lose-btn").css("display","none");
+			$("#you-win-btn").css("display","none");
+			$("#pause-btn").css("display","none");
+			$("#new-game-btn").css("display","block");
 			break;
 		default:
 	}
