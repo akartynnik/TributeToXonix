@@ -338,7 +338,7 @@ function RaiseConquer() {
 		return false;
 	//Рассчет полученых очков за отрезанный кусок
 	CalculateScore(data.cleared, levels[currentLevel-1].coeff);
-	$('#status-cleared').html(parseFloat(data.cleared).toPrecision(2));
+	$('#status-cleared').html(Math.round(parseFloat(data.cleared)));
 	if (data.cleared < percentToWin) 
 		return false;
 	//Если наотрезали на победу - выполняем следующий код
