@@ -24,10 +24,10 @@ var levels = [
         {"number": "2", "ballsCount": 1, "wardsNumber": 1, "levelName": "Level II", "coeff": 120},
         {"number": "3", "ballsCount": 2, "wardsNumber": 1, "levelName": "Level III", "coeff": 160},
         {"number": "4", "ballsCount": 2, "wardsNumber": 2, "levelName": "Level IV", "coeff": 240},
-        {"number": "3", "ballsCount": 1, "wardsNumber": 1, "levelName": "BONUS LEVEL: MARIO", "coeff": 500},
-        {"number": "5", "ballsCount": 3, "wardsNumber": 2, "levelName": "Level VI", "coeff": 320},
-        {"number": "5", "ballsCount": 4, "wardsNumber": 2, "levelName": "Level VII", "coeff": 480},
-        {"number": "5", "ballsCount": 5, "wardsNumber": 2, "levelName": "Level VIIL", "coeff": 800},
+        {"number": "5", "ballsCount": 1, "wardsNumber": 1, "levelName": "BONUS LEVEL: MARIO", "coeff": 500, "lavelMusic": "bonus-mario.mp3"},
+        {"number": "6", "ballsCount": 3, "wardsNumber": 2, "levelName": "Level VI", "coeff": 320},
+        {"number": "7", "ballsCount": 4, "wardsNumber": 2, "levelName": "Level VII", "coeff": 480},
+        {"number": "8", "ballsCount": 5, "wardsNumber": 2, "levelName": "Level VIIL", "coeff": 800},
     ];
 	
 var levelMusicsArray = [
@@ -130,7 +130,11 @@ $(function () {
 	}
 	
 	//Запуск фоновой музыки
-	currentMusicFileName = levelMusicsArray[Math.floor((Math.random() * levelMusicsArray.length))].music;
+	
+	if(typeof levels[currentLevel-1].lavelMusic !== 'undefined')
+		currentMusicFileName = levels[currentLevel-1].lavelMusic;
+	else
+		currentMusicFileName = levelMusicsArray[Math.floor((Math.random() * levelMusicsArray.length))].music;
 	music = new Audio("music/"+ currentMusicFileName);
 	music.loop = true;
 	music.play();
