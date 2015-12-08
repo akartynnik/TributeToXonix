@@ -14,7 +14,7 @@ var elCanvas = $('#graphics');
 var w = 1360;
 var h = 800;
 var allowedFails = 3; //default = 3
-var percentToWin = 80; //default = 80
+var percentToWin = 75; //default = 75
 var canvasPopupPositionX = Math.floor((w- 700)/ 2)
 var canvasPopupPositionY = Math.floor((h- 200)/ 2);
 
@@ -123,6 +123,9 @@ $(function () {
 	//Если человек перешел на несуществующий левел, считаем что он выиграл :)
 	if(currentLevel > levels.length){
 		DisplayPopup("win");
+		music = new Audio("music/win.mp3");
+		music.loop = true;
+		music.play();
 		return;
 	}
 	
@@ -228,7 +231,7 @@ $(function () {
 				music.loop = true;	
 				music.play();	
 			}	
-		}, 1300);
+		}, 1500);
 		
         if (nFaults < allowedFails) return;
 		//показываем popup, если столкнулись больше, чем allowedFails раз (проиграли)
@@ -251,6 +254,11 @@ $(function () {
         setTimeout(function() {
             picxonix('end', true);
         }, 200);
+		
+		music.pause();
+		music = new Audio("music/erasure-all.wav");
+		music.play();
+		
 		setTimeout(function() {NextLavelLoad(currentLevel);}, 3000);
         return true;
     }
