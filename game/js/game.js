@@ -131,6 +131,16 @@ $(document).keydown(function(e) {
 		}
 	}
 	
+	if(key === 403){
+		e.preventDefault();
+		e.stopPropagation();
+		if(flag){
+			InfoGame();
+		} else {
+			StartGame();
+		}
+	}
+	
 	if ((key === 8 && !$(e.target).is("input, textarea")) || key === 27) {
         e.preventDefault();
 		e.stopPropagation();
@@ -151,7 +161,7 @@ $(function () {
 		currentLevel = 1;
 	}
 	
-	//Set current score and hight score to local storage
+	//Set current score and high score to local storage
 	if(localStorage.getItem("cScore") === null || currentLevel===1)
 		localStorage.setItem("cScore",0);
 	if(localStorage.getItem("hScore") === null)
@@ -395,6 +405,12 @@ function PauseGame(){
 	music.pause();
 }
 
+function InfoGame(){
+	flag = false;
+	DisplayPopup("info");
+	//music.pause();
+}
+
 function StartGame(){
 	flag = true;
 	HidePopup();
@@ -418,11 +434,13 @@ function DisplayPopup(loseOrWin){
 			$("#you-win").css("display","block"); 
 			$("#pause").css("display","none");
 			$("#new-game").css("display","none");
+			$("#info").css("display","none");
 			$("#your-score").css("display","block");
 			$("#you-win-btn").css("display","block");
 			$("#pause-btn").css("display","none");
 			$("#you-lose-btn").css("display","none");
 			$("#new-game-btn").css("display","none");
+			//$("#info-btn").css("display","none");
 			gameIsFinish = true;	
 			break;
 		case "lose": 
@@ -430,11 +448,13 @@ function DisplayPopup(loseOrWin){
 			$("#you-win").css("display","none");
 			$("#pause").css("display","none");
 			$("#new-game").css("display","none");
+			$("#info").css("display","none");
 			$("#your-score").css("display","block");
 			$("#you-lose-btn").css("display","block");
 			$("#you-win-btn").css("display","none");
 			$("#pause-btn").css("display","none");
 			$("#new-game-btn").css("display","none");
+			//$("#info-btn").css("display","none");
 			gameIsFinish = true;	
 			break;
 		case "pause": 
@@ -442,22 +462,39 @@ function DisplayPopup(loseOrWin){
 			$("#you-win").css("display","none");
 			$("#pause").css("display","block");
 			$("#new-game").css("display","none");
+			$("#info").css("display","none");
 			$("#your-score").css("display","none");
 			$("#you-lose-btn").css("display","none");
 			$("#you-win-btn").css("display","none");
 			$("#pause-btn").css("display","block");
 			$("#new-game-btn").css("display","none");
+			//$("#info-btn").css("display","none");
 			break;
 		case "new-game": 
 			$("#you-lose").css("display","none");
 			$("#you-win").css("display","none");
 			$("#pause").css("display","none");
 			$("#new-game").css("display","block");
+			$("#info").css("display","none");
 			$("#your-score").css("display","none");
 			$("#you-lose-btn").css("display","none");
 			$("#you-win-btn").css("display","none");
 			$("#pause-btn").css("display","none");
 			$("#new-game-btn").css("display","block");
+			//$("#info-btn").css("display","none");
+			break;
+		case "info":
+			$("#you-lose").css("display","none");
+			$("#you-win").css("display","none");
+			$("#pause").css("display","none");
+			$("#new-game").css("display","none");
+			$("#info").css("display","block");
+			$("#your-score").css("display","none");
+			$("#you-lose-btn").css("display","none");
+			$("#you-win-btn").css("display","none");
+			$("#pause-btn").css("display","none");
+			$("#new-game-btn").css("display","none");
+			//$("#info-btn").css("display","block");
 			break;
 		default:
 	}

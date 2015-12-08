@@ -94,6 +94,12 @@ body {
 	width: 180px;
 }
 
+.buttons-table td.button-red {
+	color: red; 
+	vertical-align: top; 
+	width: 180px;
+}
+
 .buttons-table td.button-back {
 	color: gray; 
 	vertical-align: top; 
@@ -136,6 +142,11 @@ a {
 	padding-bottom:5px;
 }
 
+.underlined-red {
+	border-bottom: 4px dotted red;
+	padding-bottom:5px;
+}
+
 .underlined-back {
 	border-bottom: 4px dotted gray;
 	padding-bottom:5px;
@@ -143,5 +154,5 @@ a {
 
 #debug-info{
 	margin-top: 30px;
-	text-align: senter;
+	text-align: center;
 }

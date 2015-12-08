@@ -1,7 +1,7 @@
 $(function () {
 	$(document).keydown (function(e) {
 		var key = e.which;
-		//обработка нажатия Enter
+		//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ Enter
 		if(key === 13 || key === 404){
 			e.preventDefault();
 			e.stopPropagation();
@@ -36,6 +36,12 @@ $(function () {
 			e.preventDefault();
 			e.stopPropagation();
 			$("#btn-blue").addClass("underlined-blue");
+		}
+		
+		if(key === 29 || key === 403){
+			e.preventDefault();
+			e.stopPropagation();
+			$("#btn-red").addClass("underlined-red");
 		}
 		
 		if ((key === 8 || key === 27) && !$(e.target).is("input, textarea")) {
@@ -78,6 +84,12 @@ $(function () {
 			e.preventDefault();
 			e.stopPropagation();
 			$("#btn-blue").removeClass("underlined-blue");
+		}
+		
+		if(key === 403){
+			e.preventDefault();
+			e.stopPropagation();
+			$("#btn-red").removeClass("underlined-red");
 		}
 		
 		if ((key === 8 || key === 27)  && !$(e.target).is("input, textarea")) {
