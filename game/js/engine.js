@@ -77,7 +77,7 @@
         colorCursor: '#FF610D',
         colorCursorIn: '#00aaaa',
         colorTrail: '#ffc624',
-        timeoutCollision: 1000,
+        timeoutCollision: 1500,
         callback: null,
         callbackOnFrame: false
     };

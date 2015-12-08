@@ -6,13 +6,14 @@ var gameIsFinish = false;
 var currentPercent=0;
 var currentLevel = ParseUrl("clevel");
 var backPressed = false;
+var music = null;
+var currentMusicFileName;
 
 /*--- Config variables---*/
 var elCanvas = $('#graphics');
 var w = 1360;
 var h = 800;
-var allowedFails = 3; //default = 3
-var percentToWin = 85; //default =  85
+var allowedFails = 3; //default = 80
 var canvasPopupPositionX = Math.floor((w- 700)/ 2)
 var canvasPopupPositionY = Math.floor((h- 200)/ 2);
 
@@ -125,7 +126,8 @@ $(function () {
 	}
 	
 	//Запуск фоновой музыки
-	var music = new Audio("music/"+ levelMusicsArray[Math.floor((Math.random() * levelMusicsArray.length))].music);
+	currentMusicFileName = levelMusicsArray[Math.floor((Math.random() * levelMusicsArray.length))].music;
+	music = new Audio("music/"+ currentMusicFileName);
 	music.loop = true;
 	music.play();
 	
@@ -214,13 +216,26 @@ $(function () {
 	//Проверка на то, столкнулись ли (Fail)
     function raiseFaults() {
         $('#status-faults').html(++nFaults);
+		//Play fail music
+		music.pause();
+		music = new Audio("music/fault.wav");
+		music.play();
+		//Проигрываем музыку уровня дальше, если не проиграли (с задержкой, что бы успела проиграться музыка фейла)
+		setTimeout(function() {
+			if(!gameIsFinish){
+				music = new Audio("music/" + currentMusicFileName);
+				music.loop = true;	
+				music.play();	
+			}	
+		}, 1300);
+		
         if (nFaults < allowedFails) return;
 		//показываем popup, если столкнулись больше, чем allowedFails раз (проиграли)
 		DisplayPopup("lose");	
         picxonix('end', false);
     }
 
-	//Проверка на то, выиграли ли
+	//Проверка на то, прошли ли раунд
     function raiseConquer() {
         var data = picxonix('state');
         console.log('raiseConquer(): data=%o',data);
