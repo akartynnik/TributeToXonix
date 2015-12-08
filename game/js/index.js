@@ -38,7 +38,7 @@ $(function () {
 			$("#btn-blue").addClass("underlined-blue");
 		}
 		
-		if (key === 8 && !$(e.target).is("input, textarea")) {
+		if ((key === 8 || key === 27) && !$(e.target).is("input, textarea")) {
 			e.preventDefault();
 			e.stopPropagation();
 			$("#btn-back").addClass("underlined-back");
@@ -80,7 +80,7 @@ $(function () {
 			$("#btn-blue").removeClass("underlined-blue");
 		}
 		
-		if (key === 8 && !$(e.target).is("input, textarea")) {
+		if ((key === 8 || key === 27)  && !$(e.target).is("input, textarea")) {
 			e.preventDefault();
 			e.stopPropagation();
 			$("#btn-back").removeClass("underlined-back");
