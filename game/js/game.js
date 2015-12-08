@@ -6,7 +6,7 @@ var gameIsFinish = false;
 var currentPercent=0;
 var currentLevel = ParseUrl("clevel");
 var backPressed = false;
-var music = null;
+var music, musicFail, musicErasure = null;
 var currentMusicFileName;
 var warderImg;
 var ballImg;
@@ -194,6 +194,10 @@ $(function () {
 	music.loop = true;
 	music.play();
 	
+	//Preload music
+	musicFail = new Audio("music/fault.wav");
+	musicErasure = new Audio("music/erasure-all.wav");
+	
 	//Set bonus game images
 	if(typeof levels[currentLevel-1].warderImg !== 'undefined')
 		warderImg = levels[currentLevel-1].warderImg;
@@ -304,15 +308,13 @@ $(function () {
 	//Проверка на то, столкнулись ли (Fail)
     function raiseFaults() {
         $('#status-faults').html(++nFaults);
-		//Play fail music
+		//Stop background music and play fail music
 		music.pause();
-		music = new Audio("music/fault.wav");
-		music.play();
+		music.currentTime = 0; 
+		musicFail.play();
 		//Проигрываем музыку уровня дальше, если не проиграли (с задержкой, что бы успела проиграться музыка фейла)
 		setTimeout(function() {
 			if(!gameIsFinish){
-				music = new Audio("music/" + currentMusicFileName);
-				music.loop = true;	
 				music.play();	
 			}	
 		}, 1500);
@@ -340,8 +342,7 @@ $(function () {
         }, 200);
 		
 		music.pause();
-		music = new Audio("music/erasure-all.wav");
-		music.play();
+		musicErasure.play();
 		
 		setTimeout(function() {NextLavelLoad(currentLevel);}, 3000);
         return true;
