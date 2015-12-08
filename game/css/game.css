@@ -142,3 +142,7 @@ div.my-container {
 	color: yellow !important;
 	text-decoration: none !important;
 }
+
+.bonus-level-exp{
+	color: red;
+}

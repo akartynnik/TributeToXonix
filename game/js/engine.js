@@ -85,7 +85,11 @@
         nBalls: 1,
         nWarders: 1,
         speedCursor: 5,
-        speedEnemy: 5
+        speedEnemy: 5,
+		warderImgSrc: "images/warder.png",
+		ballImgSrc: "images/ball.png",
+		cur1ImgSrc: "images/cursor1.png",
+		cur2ImgSrc: "images/cursor2.png",
     };
     // cell attributes:
     var CA_CLEAR = 1 << 0;
@@ -180,7 +184,7 @@
         }
         imgBall = new Image();
         //imgBall.src = ctxTmp.canvas.toDataURL();
-		imgBall.src = "images/inky.png";
+		imgBall.src = cfgLevel.ballImgSrc;
         function prepareSquare(colorOut, colorIn) {
             ctxTmp.clearRect(0, 0, sizeCell, sizeCell);
             ctxTmp.fillStyle = colorOut;
@@ -195,13 +199,13 @@
         prepareSquare(cfgMain.colorWarder, cfgMain.colorWarderIn);
         imgWarder = new Image();
         //imgWarder.src = ctxTmp.canvas.toDataURL();
-		imgWarder.src = "images/blinky.png";
+		imgWarder.src = cfgLevel.warderImgSrc;
 		
         // prepare cursor image:
         prepareSquare(cfgMain.colorCursor, cfgMain.colorCursorIn);
         imgCursor = new Image();
         //imgCursor.src = ctxTmp.canvas.toDataURL();
-		imgCursor.src = "images/cursor1.png"
+		imgCursor.src = cfgLevel.cur1ImgSrc;
 		
         return {width: width+ 4*sizeCell, height: height+ 4*sizeCell};
     }
@@ -320,10 +324,10 @@
 		var currentSeconds = Math.floor(Date.now() / 100);
 		if(currentSeconds%2 === 0 && currentSeconds!=oldDiteTime){
 			if(colorCursorBeepFlag){
-				imgCursor.src = "images/cursor1.png";
+				imgCursor.src = cfgLevel.cur1ImgSrc;
 				colorCursorBeepFlag = false;
 			}else{
-				imgCursor.src = "images/cursor2.png";
+				imgCursor.src = cfgLevel.cur2ImgSrc;
 				colorCursorBeepFlag = true;
 			}
 		}

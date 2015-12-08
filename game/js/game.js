@@ -8,26 +8,74 @@ var currentLevel = ParseUrl("clevel");
 var backPressed = false;
 var music = null;
 var currentMusicFileName;
+var warderImg;
+var ballImg;
+var cur1Img;
+var cur2Img;
 
 /*--- Config variables---*/
 var elCanvas = $('#graphics');
 var w = 1360;
 var h = 800;
 var allowedFails = 3; //default = 3
-var percentToWin = 75; //default = 75
+var percentToWin = 80; //default = 80
 var canvasPopupPositionX = Math.floor((w- 700)/ 2)
 var canvasPopupPositionY = Math.floor((h- 200)/ 2);
 
 /*--- Arrays of elemens ---*/
 var levels = [
-        {"number": "1", "ballsCount": 1, "wardsNumber": 0, "levelName": "Level I", "coeff": 100},
-        {"number": "2", "ballsCount": 1, "wardsNumber": 1, "levelName": "Level II", "coeff": 120},
-        {"number": "3", "ballsCount": 2, "wardsNumber": 1, "levelName": "Level III", "coeff": 160},
-        {"number": "4", "ballsCount": 2, "wardsNumber": 2, "levelName": "Level IV", "coeff": 240},
-        {"number": "5", "ballsCount": 1, "wardsNumber": 1, "levelName": "BONUS LEVEL: MARIO", "coeff": 500, "lavelMusic": "bonus-mario.mp3"},
-        {"number": "6", "ballsCount": 3, "wardsNumber": 2, "levelName": "Level VI", "coeff": 320},
-        {"number": "7", "ballsCount": 4, "wardsNumber": 2, "levelName": "Level VII", "coeff": 480},
-        {"number": "8", "ballsCount": 5, "wardsNumber": 2, "levelName": "Level VIIL", "coeff": 800},
+        {
+			"number": "1", 
+			"ballsCount": 1, 
+			"wardsNumber": 0, 
+			"levelName": "Level I", 
+			"coeff": 100},
+        {
+			"number": "2", 
+			"ballsCount": 1, 
+			"wardsNumber": 1, 
+			"levelName": "Level II", 
+			"coeff": 120},
+        {
+			"number": "3", 
+			"ballsCount": 2, 
+			"wardsNumber": 1, 
+			"levelName": "Level III", 
+			"coeff": 160},
+        {
+			"number": "4", 
+			"ballsCount": 2, 
+			"wardsNumber": 2, 
+			"levelName": "Level IV", 
+			"coeff": 240},
+        {
+			"number": "5", 
+			"ballsCount": 1, 
+			"wardsNumber": 1, 
+			"levelName": "BONUS LEVEL: <span class='bonus-level-exp'>exp: x2</span>", 
+			"coeff": 480, "lavelMusic": "bonus-mario.mp3", 
+			"warderImg": "warder-mario.png", 
+			"ballImg": "ball-mario.png", 
+			"cur1Img": "cursor1-mario.png", 
+			"cur2Img": "cursor2-mario.png"},
+        {
+			"number": "6", 
+			"ballsCount": 3, 
+			"wardsNumber": 2, 
+			"levelName": "Level VI", 
+			"coeff": 320},
+        {
+			"number": "7", 
+			"ballsCount": 4, 
+			"wardsNumber": 2, 
+			"levelName": "Level VII", 
+			"coeff": 480},
+        {
+			"number": "8", 
+			"ballsCount": 5, 
+			"wardsNumber": 2,
+			"levelName": "Level VIIL", 
+			"coeff": 800},
     ];
 	
 var levelMusicsArray = [
@@ -77,11 +125,9 @@ $(document).keydown(function(e) {
 		e.preventDefault();
 		e.stopPropagation();
 		if(flag){
-			flag = false;
-			DisplayPopup("pause");
+			PauseGame();
 		} else {
-			flag = true;
-			HidePopup();
+			StartGame();
 		}
 	}
 	
@@ -117,7 +163,7 @@ $(function () {
 	$("#h_score").text(localStorage.getItem("hScore").replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 '));
 	$("#c_score").text(localStorage.getItem("cScore").replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 '));
 	if(currentLevel <= levels.length){
-		$("#level-name").text(levels[currentLevel-1].levelName);
+		$("#level-name").html(levels[currentLevel-1].levelName);
 	}
 	
 	//Если человек перешел на несуществующий левел, считаем что он выиграл :)
@@ -130,7 +176,6 @@ $(function () {
 	}
 	
 	//Запуск фоновой музыки
-	
 	if(typeof levels[currentLevel-1].lavelMusic !== 'undefined')
 		currentMusicFileName = levels[currentLevel-1].lavelMusic;
 	else
@@ -138,6 +183,27 @@ $(function () {
 	music = new Audio("music/"+ currentMusicFileName);
 	music.loop = true;
 	music.play();
+	
+	//Set bonus game images
+	if(typeof levels[currentLevel-1].warderImg !== 'undefined')
+		warderImg = levels[currentLevel-1].warderImg;
+	else
+		warderImg = "warder.png";
+	
+	if(typeof levels[currentLevel-1].ballImg !== 'undefined')
+		ballImg = levels[currentLevel-1].ballImg;
+	else
+		ballImg = "ball.png";
+	
+	if(typeof levels[currentLevel-1].cur1Img !== 'undefined')
+		cur1Img = levels[currentLevel-1].cur1Img;
+	else
+		cur1Img = "cursor1.png";
+	
+	if(typeof levels[currentLevel-1].cur2Img !== 'undefined')
+		cur2Img = levels[currentLevel-1].cur2Img;
+	else
+		cur2Img = "cursor2.png";
 	
 	//Game core initialization
     var size = picxonix(elCanvas[0], {
@@ -157,7 +223,11 @@ $(function () {
                 default:
             }
         },
-        callbackOnFrame: true
+        callbackOnFrame: true,
+		warderImgSrc: "images/" + warderImg,
+		ballImgSrc: "images/" + ballImg,
+		cur1ImgSrc: "images/" + cur1Img,
+		cur2ImgSrc: "images/" + cur2Img,
     });
     if (!size) return;
     elCanvas.css({width: w, height: h});
@@ -321,14 +391,14 @@ function RestartGame(){
 
 function PauseGame(){
 	flag = false;
-	picxonix('play', flag);
 	DisplayPopup("pause");
+	music.pause();
 }
 
 function StartGame(){
 	flag = true;
-	picxonix('play', flag);
 	HidePopup();
+	music.play();
 }
 
 function HidePopup(){
