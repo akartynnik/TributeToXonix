@@ -154,13 +154,13 @@ $(document).keydown(function(e) {
 	}
 	
 	//Если не открыт ни один попап и нажата BACK BTN и мы еще играем - вызываем GameInfoShow()
-	if ((key === 8 || key === 27 || key == 461) && openPopupType === null && gameStatus === "play") {
+	if ((key === 8 || key === 27) && openPopupType === null && gameStatus === "play") {
 		BackPopupShow();
 		return false;
 	}
 	
 	//Если открыт попап "back" и нажата BACK BTN и мы еще играем - вызываем GameInfoHide() 
-	if ((key === 8 || key === 27 || key == 461) && openPopupType === "back" && gameStatus === "play") {
+	if ((key === 8 || key === 27) && openPopupType === "back" && gameStatus === "play") {
 		BackPopupHide();
 		return false;
 	}
@@ -205,6 +205,9 @@ elCanvas.click(function(e) {
 
 
 $(function () {
+	//если ашли на эту страницу, то заменяем её в истории на главную. В итоге при нажатии back переходим на главную.
+	history.replaceState("Index", "Index", "index.html");
+	
 	if(currentLevel === "Not found"){
 		currentLevel = 1;
 	}
