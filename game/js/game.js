@@ -4,7 +4,9 @@ var popup = null;
 var previousCleared = 0;
 var currentNumberFaults = 0;
 var currentLevel = ParseUrl("level");
-var music, musicFail, musicErasure, musicWin = null;
+var music = null;
+var musicFail = new Audio("music/fault.wav");
+var musicErasure = new Audio("music/erasure-all.wav");
 var currentMusicFileName;
 var warderImg;
 var ballImg;
@@ -152,13 +154,13 @@ $(document).keydown(function(e) {
 	}
 	
 	//Если не открыт ни один попап и нажата BACK BTN и мы еще играем - вызываем GameInfoShow()
-	if ((key === 8 || key === 27) && openPopupType === null && gameStatus === "play") {
+	if ((key === 8 || key === 27 || key == 461) && openPopupType === null && gameStatus === "play") {
 		BackPopupShow();
 		return false;
 	}
 	
 	//Если открыт попап "back" и нажата BACK BTN и мы еще играем - вызываем GameInfoHide() 
-	if ((key === 8 || key === 27) && openPopupType === "back" && gameStatus === "play") {
+	if ((key === 8 || key === 27 || key == 461) && openPopupType === "back" && gameStatus === "play") {
 		BackPopupHide();
 		return false;
 	}
@@ -231,8 +233,8 @@ $(function () {
 		else
 			currentMusicFileName = levelMusicsArray[Math.floor((Math.random() * levelMusicsArray.length))].music;
 		music = new Audio("music/"+ currentMusicFileName);
-		musicFail = new Audio("music/fault.wav");
-		musicErasure = new Audio("music/erasure-all.wav");
+		music.loop = true;
+		music.play();
 		
 		//Set bonus game images
 		if(typeof levels[currentLevel-1].warderImg !== 'undefined')
@@ -295,15 +297,11 @@ function StartLevel() {
 	picxonix('level', levelImagesArray[randomImageNumber]);
 	startLevelTime = Date.now(); 
 	nTimeLevel = 0;
-	
-	//Запуск музыки уровня
-	music.loop = true;
-	music.play();
 }
 
 //Функция инициализации и старта игры
 function FinishGame() {
-	musicWin = new Audio("music/win.mp3");
+	var musicWin = new Audio("music/win.mp3");
 	musicWin.loop = true;
 	musicWin.play();
 	SetHighScore();
@@ -316,18 +314,17 @@ function RaiseFaults() {
 	//Stop background music and play fail music
 	music.pause();
 	music.currentTime = 0; 
-	musicFail.play();
 	//Проигрываем музыку уровня дальше, если всё еще играем (с задержкой, что бы успела проиграться музыка фейла)
-	setTimeout(function() { 
-		if(gameStatus === "play")
-			music.play(); 
-	}, 1500);
-	
-	if (currentNumberFaults < allowedFails) 
+	if(currentNumberFaults < allowedFails) {
+		setTimeout(function() { 
+				music.play(); 
+		}, 1500);
 		return;
+	}
 	//показываем popup lose, если столкнулись больше, чем allowedFails раз
 	SetHighScore();
 	ShowPopup("lose");
+	musicFail.play();
 	picxonix('end', false);
 }
 
