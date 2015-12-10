@@ -16,23 +16,9 @@ body {
 	line-height: 30px;
 }
 
-.container{
+.info-container{
 	width: 1360px; 
-	margin: 0 auto; 
-	margin-top: 20px;
-}
-
-.pre-logo{
-	text-align: center; 
-	font-size: 26px;
-}
-
-.logo {
-	text-align: center; 
-	font-size: 100px; 
-	margin-bottom: 10px; 
-	line-height: 180px;
-	font-family: "Qix Large";
+	margin: 50px auto 0 auto; 
 }
 
 .rules{
@@ -47,7 +33,6 @@ body {
 .right-block{
 	width: 49%; 
 	float: left; 
-	text-align: center;
 }
 
 .enemy-table{
@@ -113,14 +98,7 @@ body {
 }
 
 .game-image{
-	width: 700px;
-}
-
-a {
-	font-family: "Qix Large";
-	font-size: 33px;
-	color: #E2322F;
-	text-decoration: none !important;
+	width: 650px;
 }
 
 .here:hover,
@@ -129,20 +107,18 @@ a {
 	text-decoration: none !important;
 }
 
-.green{
-	color: green;
+.orange{
+	color: orange;
 }
 
-.selected {
-	color: yellow;
+
+.about table{
+	font-family: "Qix Small";
+	width: 100%;
 }
 
-.underlined-blue {
-	border-bottom: 4px dotted blue;
-	padding-bottom:5px;
-}
-
-.underlined-red {
-	border-bottom: 4px dotted red;
-	padding-bottom:5px;
+.about table td{
+	vertical-align: top;
+	text-align: right;
+	padding: 5px 10px;
 }

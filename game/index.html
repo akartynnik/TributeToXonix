@@ -2,136 +2,76 @@
 <html>
     <head>
         <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1"> 
         <title>Tribute to Xonix</title>
-		<link rel="stylesheet" href="css/index.css">		
+
+		<link rel="stylesheet" href="css/style.css">
+		
     </head>
     <body>
-		<div class="container">
-			<div class="pre-logo">tribute to </div>
-			<div class="logo">Xonix</div>
-			<div style="overflow: hidden;">
-				<div class="left-block">
-					<div style="padding: 0 20px;">
-						<div class="rules">
-							You should open over 85% of the hidden picture to win the level.  If you lose 3 times, you will start from the first level.
-						</div>
-					
-						<table class="enemy-table">
-							<tr>
-								<td class="enemy">
-									<img src="images/ball.png"/>
-								</td>
-								<td>
-									It's Ball. You should catch him, but don't touch him!
-								</td>
-							</tr>
-							
-							<tr>
-								<td class="enemy">
-									<img src="images/warder.png"/>
-								</td>
-								<td>
-									It's Warder. You should run from him.
-								</td>
-							</tr>
-						</table>
-						
-						<div class="controls">
-							Controls:
-						</div>
-						<table class="controls-table">
-							<tr>
-								<td class="button">
-									<span id="left">&#9668;</span>
-								</td>
-								<td>
-									move left
-								</td>
-							</tr>
-							<tr>
-								<td class="button">
-									<span id="right">&#9658;</span>
-								</td>
-								<td>
-									move right
-								</td>
-							</tr>
-							<tr>
-								<td class="button">
-									<span id="up">&#9650;</span>
-								</td>
-								<td>
-									move up
-								</td>
-							</tr>
-							
-							<tr>
-								<td class="button">
-									<span id="down">&#9660;</span>
-								</td>
-								<td>
-									move down
-								</td>
-							</tr>
-						</table>
-						
-						<table class="buttons-table">
-							<tr>
-								<td class="button-green">
-									<span id="btn-green">GREEN BTN</span>
-								</td>
-								<td>
-									confirm "New game"<br/>
-									confirm "Start game"<br/>
-									confirm "Next level"
-								</td>
-							</tr>
-							
-							<tr>
-								<td class="button-blue">
-									<span id="btn-blue">BLUE BTN</span>
-								</td>
-								<td>
-									pause on / off
-								</td>
-							</tr>
-							
-							<tr>
-								<td class="button-back">
-									<span id="btn-back">BACK BTN</span>
-								</td>
-								<td>
-									start new game
-								</td>
-							</tr>
-							
-							<tr>
-								<td class="button-red">
-									<span id="btn-red">RED BTN</span>
-								</td>
-								<td>
-									game info
-								</td>
-							</tr>
-						</table>
+        <div class="my-container">
+            <div class="header">
+				<div class="pre-logo">Tribute to</div>
+                <div class="logo">Xonix</div>
+				<div class="statistics">
+                    <div>
+						Time: <span id="status-time">00:00</span>
+					</div>
+					<div>
+						Faults: <span id="status-faults">0</span> / <span  id="allowed-fails"></span>
+					</div>
+					<div>
+						Cleared: <span id="status-cleared">0</span>% / <span  id="percent-to-win"></span>%
+					</div>
+                </div>
+                <div class="level-and-score" >
+					<div id="level-name"></div>
+					<div>
+						HIGH SCORE: <span id="h_score"></span>
+					</div>
+					<div>
+						CURRENT SCORE: <span id="c_score"></span>
 					</div>
 				</div>
-				
-				<div class="right-block">
-					<img src="images/game.jpg" class="game-image"/>
-				</div>
+            </div>
+
+            <div id="graphics" class="my-center"></div>
+			<div class="bottom-nav" style="padding-top: 90px;">
+				<a href="" style="color: blue;">BLUE: PAUSE</a>
+				<a href="">RED: INFO</a>
 			</div>
+        </div>
+		
+
+		<div id="popup">
+			<span id="you-lose" class="popup-header">YOU LOSE...</span>
+			<span id="you-win"  class="popup-header" style="color: yellow;">YOU  WIN!</span>
+			<span id="pause"  class="popup-header" style="color: blue;">PAUSE</span>
+			<span id="your-score"></span>
+			<span id="new-game" class="popup-header" style="font-size: 28px;">DO YOU WANT TO START NEW GAME?</span>
+			<a href="#" id="you-lose-btn" onclick="RestartGame();">
+				PRESS <span class="here">HERE</span> OR <span style="color: green">GREEN BUTTON</span> TO PLAY AGAIN
+			</a>
+			<a href="#" id="you-win-btn" onclick="RestartGame();">
+				PRESS <span class="here">HERE</span> OR <span style="color: green">GREEN BUTTON</span> TO START NEW GAME
+			</a>
+			<a href="#" id="pause-btn" onclick="PauseOff();" style="margin-top: 10px;">
+				PRESS <span class="here">HERE</span> OR <span style="color: blue">BLUE BUTTON</span> TO START
+			</a>
+			<a href="#" id="new-game-btn" onclick="return false;" style="margin-top: 10px;">
+				PRESS <span style="color: gray" class="here" onclick="backPressed = false; HidePopup();">BACK</span> TO CANCEL 
+				OR <span style="color: white" class="here" onclick="RestartGame();">OK</span> TO START NEW GAME
+			</a>
 			
-			<div class="game-start">
-				<a href="game.html">PRESS <span class="here">HERE</span> OR <span class="green">GREEN BUTTON</span> TO START GAME</a>
-			</div>
+			<div id="info" ></div>
 		</div>
 		
-		<audio autoplay loop>  
-			<source src="music/index.mp3">
-		</audio>
-		
-		<script src="js/jquery-1.11.1.min.js"></script>
-		<script src="js/index.js"></script>
-   </body>
+        <script src="js/jquery-1.11.1.min.js"></script>
+        <script src="js/underscore-min.js"></script>
+        <script src="js/jquery-blink.js"></script>
+
+        <script  src="js/engine.js"></script>
+		<script  src="js/core.js"></script>
+       </body>
 </html>

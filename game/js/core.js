@@ -3,9 +3,10 @@
 var popup = null;
 var previousCleared = 0;
 var currentNumberFaults = 0;
-var currentLevel = ParseUrl("level");
+var currentLevel;
 var music = null;
 var musicFail = new Audio("music/fault.wav");
+var musicInfo = new Audio("music/info.mp3");
 var musicErasure = new Audio("music/erasure-all.wav");
 var currentMusicFileName;
 var warderImg;
@@ -117,6 +118,14 @@ var levelImagesArray = [
 var keyHash = {37: 'left', 39: 'right', 38: 'up', 40: 'down'};
 /*-------------------GLOABAL FARIABLE END-----------------------*/
 
+// Обработчик выхода приложения в background режим. Не сработало на эмуляторе. Проверить на телевизоре.
+document.addEventListener ('visibilityChange', function() {
+    if (document.hidden)
+       PauseOn();
+    else
+        PauseOff();
+}, true);
+
 
 /*------------------- KEY PRESS PROCESSOR START -------------------------*/
 $(document).keydown(function(e) {
@@ -206,10 +215,19 @@ elCanvas.click(function(e) {
 
 $(function () {
 	//если ашли на эту страницу, то заменяем её в истории на главную. В итоге при нажатии back переходим на главную.
-	history.replaceState("Index", "Index", "index.html");
+	//history.replaceState("Index", "Index", "index.html");
 	
-	if(currentLevel === "Not found"){
+	currentLevel  = localStorage.getItem("level");
+	
+	//small hack
+	if(ParseUrl("level") !== null){
+		currentLevel = ParseUrl("level");
+		localStorage.setItem("level",currentLevel);
+	}
+	
+	if(currentLevel  === null){
 		currentLevel = 1;
+		localStorage.setItem("level",currentLevel);
 	}
 	
 	//Инициализация и установка current score и high score в local-storage
@@ -286,6 +304,12 @@ $(function () {
 		});
 		elCanvas.css({width: w, height: h});
 
+		
+		if(sessionStorage.getItem("isFirstRunTime") === null){
+			GameInfoShow();
+			sessionStorage.setItem("isFirstRunTime", 0)
+		} 
+	
 		//стартуем игру
 		StartLevel();
 	}
@@ -388,30 +412,9 @@ function SetHighScore(){
 	}
 }
 
-function ParseUrl(val) {
-    var result = "Not found",
-        tmp = [];
-    location.search
-    //.replace ( "?", "" ) 
-    // this is better, there might be a question mark inside
-    .substr(1)
-        .split("&")
-        .forEach(function (item) {
-        tmp = item.split("=");
-        if (tmp[0] === val) result = decodeURIComponent(tmp[1]);
-    });
-    return result;
-}
-
 function NextLavelLoad(){
-	var url = window.location.href;
-	console.log("ololo" + window.location.href);
-	var nLevel = parseInt(currentLevel)+1;
-	if (url.indexOf('?') > -1){
-		url =window.location.href.split('?')[0];
-	}
-	url += '?level='+nLevel;
-	window.location.href = url;
+	localStorage.setItem("level",parseInt(currentLevel) + 1);
+	window.location.reload();
 }
 
 function ShowPopup(popupType){
@@ -507,7 +510,8 @@ function HidePopup(){
 }
 
 function RestartGame(){
-	window.location.href = "index.html";
+	localStorage.setItem("level",1);
+	window.location.reload();
 }
 
 function PauseOn(){
@@ -521,10 +525,17 @@ function PauseOff(){
 }
 
 function GameInfoShow(){
+	$('#info').load("info.html");
+	music.pause();
+	musicInfo.play();
 	ShowPopup("info");
 }
 
 function GameInfoHide(){
+	$('#info').html("");
+	musicInfo.pause();
+	musicInfo.currentTime = 0; 
+	music.play();
 	HidePopup();
 }
 
@@ -534,5 +545,21 @@ function BackPopupShow(){
 
 function BackPopupHide(){
 	HidePopup();
+}
+
+
+function ParseUrl(val) {
+    var result = null,
+        tmp = [];
+    location.search
+    //.replace ( "?", "" ) 
+    // this is better, there might be a question mark inside
+    .substr(1)
+        .split("&")
+        .forEach(function (item) {
+        tmp = item.split("=");
+        if (tmp[0] === val) result = decodeURIComponent(tmp[1]);
+    });
+    return result;
 }
     
