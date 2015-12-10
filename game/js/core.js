@@ -231,7 +231,7 @@ $(function () {
 	}
 	
 	//Инициализация и установка current score и high score в local-storage
-	if(localStorage.getItem("cScore") === null || currentLevel===1)
+	if(localStorage.getItem("cScore") === null || currentLevel==1)
 		localStorage.setItem("cScore",0);
 	if(localStorage.getItem("hScore") === null)
 		localStorage.setItem("hScore",0);
