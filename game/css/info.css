@@ -93,8 +93,12 @@ body {
 
 .game-start{
 	text-align: center;
-	color: #F73936;
 	margin-top: 50px;
+}
+
+.game-start a#info-link {
+	color: green;
+	font-size: 30px;
 }
 
 .game-image{
@@ -107,8 +111,8 @@ body {
 	text-decoration: none !important;
 }
 
-.orange{
-	color: orange;
+.red{
+	color: #E2322F;
 }
 
 

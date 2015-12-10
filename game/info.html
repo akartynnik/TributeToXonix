@@ -143,6 +143,18 @@
 	</div>
 
 	<div class="game-start">
-		<a href="#" onclick="GameInfoHide();">PRESS <span class="here">HERE</span> OR <span class="orange">RED BUTTON</span> TO GO TO THE GAME</a>
+		<a id="info-link" href="#" onclick="GameInfoHide();">PRESS <span class="here">HERE</span> OR <span class="red">RED BUTTON</span> <span id="info-link-action"></span></a>
 	</div>
 </div>
+
+<script>
+$(function () {
+	if(sessionStorage.getItem("isFirstRunTime") === "0"){
+		$('#info-link-action').text("TO RETURN IN GAME");
+	} else {
+		$('#info-link-action').text("TO START GAME");
+		//Записываем в сессию, что попап уже был открыт
+		sessionStorage.setItem("isFirstRunTime", 0);
+	}
+});
+</script>

@@ -213,16 +213,15 @@ elCanvas.click(function(e) {
 /*------------------- MOUSE CLICK PROCESSOR END -------------------------*/
 
 
-$(function () {
-	//если ашли на эту страницу, то заменяем её в истории на главную. В итоге при нажатии back переходим на главную.
-	//history.replaceState("Index", "Index", "index.html");
-	
+$(function () {	
 	currentLevel  = localStorage.getItem("level");
 	
 	//small hack
 	if(ParseUrl("level") !== null){
 		currentLevel = ParseUrl("level");
 		localStorage.setItem("level",currentLevel);
+		//замена истории и ссылки, для корректной работы location.reload()
+		history.replaceState("Index", "Index", "index.html");
 	}
 	
 	if(currentLevel  === null){
@@ -304,10 +303,9 @@ $(function () {
 		});
 		elCanvas.css({width: w, height: h});
 
-		
+		//Если заходим в игру впервые - выводим инфоокно
 		if(sessionStorage.getItem("isFirstRunTime") === null){
 			GameInfoShow();
-			sessionStorage.setItem("isFirstRunTime", 0)
 		} 
 	
 		//стартуем игру
@@ -528,6 +526,7 @@ function GameInfoShow(){
 	$('#info').load("info.html");
 	music.pause();
 	musicInfo.play();
+	musicInfo.loop = true;
 	ShowPopup("info");
 }
 
@@ -552,8 +551,6 @@ function ParseUrl(val) {
     var result = null,
         tmp = [];
     location.search
-    //.replace ( "?", "" ) 
-    // this is better, there might be a question mark inside
     .substr(1)
         .split("&")
         .forEach(function (item) {
