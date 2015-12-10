@@ -25,7 +25,7 @@ var elTime = $('#status-time');
 var w = 1360;
 var h = 800;
 var allowedFails = 3; //default = 3
-var percentToWin = 2; //default = 80
+var percentToWin = 80; //default = 80
 var canvasPopupPositionX = Math.floor((w- 700)/ 2)
 var canvasPopupPositionY = Math.floor((h- 200)/ 2);
 
