@@ -1,16 +1,14 @@
 {
-    "id": "l4tribute2xonix-4",
+    "id": "com.ttag.app.xonix",
     "version": "2.0.0",
     "vendor": "Tribute To Artifact Games",
     "type": "web",
     "main": "index.html",
     "title": "Tribute to XONIX",
-    "icon": "icon.png",
-    "largeIcon": "largeIcon.png",
-    "uiRevision": 2,
-    "enyoVersion": "2.5",
-    "bgImage": "imageForLauncher.png",
-    "splashBackground": "imageForLoading.png",
+    "icon": "images/icon.png",
+    "largeIcon": "images/largeIcon.png",
+    "bgImage": "images/imageForLauncher.png",
+    "splashBackground": "images/imageForLoading.png",
     "iconColor": "white",
-    "bgColor": "white"
+    "bgColor": "black"
 }
