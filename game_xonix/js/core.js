@@ -440,7 +440,8 @@ function ShowPopup(popupType){
 			$("#pause-btn").css("display","none");
 			$("#you-lose-btn").css("display","none");
 			$("#new-game-btn").css("display","none");
-			//$("#info-btn").css("display","none");
+			
+			$("#bottom-nav").css("display","none");
 			gameStatus = "win";	
 			break;
 		case "lose": 
@@ -454,7 +455,6 @@ function ShowPopup(popupType){
 			$("#you-win-btn").css("display","none");
 			$("#pause-btn").css("display","none");
 			$("#new-game-btn").css("display","none");
-			//$("#info-btn").css("display","none");
 			gameStatus = "lose";
 			break;
 		case "pause": 
@@ -468,7 +468,6 @@ function ShowPopup(popupType){
 			$("#you-win-btn").css("display","none");
 			$("#pause-btn").css("display","block");
 			$("#new-game-btn").css("display","none");
-			//$("#info-btn").css("display","none");
 			break;
 		case "back": 
 			$("#you-lose").css("display","none");
@@ -481,7 +480,6 @@ function ShowPopup(popupType){
 			$("#you-win-btn").css("display","none");
 			$("#pause-btn").css("display","none");
 			$("#new-game-btn").css("display","block");
-			//$("#info-btn").css("display","none");
 			break;
 		case "info":
 			$("#you-lose").css("display","none");
@@ -494,7 +492,6 @@ function ShowPopup(popupType){
 			$("#you-win-btn").css("display","none");
 			$("#pause-btn").css("display","none");
 			$("#new-game-btn").css("display","none");
-			//$("#info-btn").css("display","block");
 			break;
 		default:
 	}
