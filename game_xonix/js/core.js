@@ -25,7 +25,7 @@ var elTime = $('#status-time');
 var w = 1360;
 var h = 800;
 var allowedFails = 3; //default = 3
-var percentToWin = 80; //default = 80
+var percentToWin = 2; //default = 80
 var canvasPopupPositionX = Math.floor((w- 700)/ 2)
 var canvasPopupPositionY = Math.floor((h- 200)/ 2);
 
@@ -123,7 +123,7 @@ document.addEventListener ('visibilityChange', function() {
     if (document.hidden)
        PauseOn();
     else
-        PauseOff();
+       PauseOff();
 }, true);
 
 
@@ -229,6 +229,11 @@ $(function () {
 		localStorage.setItem("level",currentLevel);
 	}
 	
+	//Если игра была закрыта и теперь открыта повторно - выставляем очки на момент начала уровня, на котором игру закрыли
+	if(sessionStorage.getItem("isFirstRunTime") === null){
+		localStorage.setItem("cScore",localStorage.getItem("lScore"));
+	}
+	
 	//Инициализация и установка current score и high score в local-storage
 	if(localStorage.getItem("cScore") === null || currentLevel==1)
 		localStorage.setItem("cScore",0);
@@ -302,14 +307,13 @@ $(function () {
 			cur2ImgSrc: "images/" + cur2Img,
 		});
 		elCanvas.css({width: w, height: h});
-
+		
 		//Если заходим в игру впервые - выводим инфоокно
 		if(sessionStorage.getItem("isFirstRunTime") === null){
 			GameInfoShow();
-		} 
-	
-		//стартуем игру
-		StartLevel();
+		} else {
+			StartLevel();
+		}
 	}
 
 });
@@ -319,6 +323,7 @@ $(function () {
 //Функция инициализации и старта игры
 function StartLevel() {
 	var randomImageNumber = Math.floor((Math.random() * levelImagesArray.length));
+	//по ходу следующей строкой игра запускается
 	picxonix('level', levelImagesArray[randomImageNumber]);
 	startLevelTime = Date.now(); 
 	nTimeLevel = 0;
@@ -411,6 +416,8 @@ function SetHighScore(){
 }
 
 function NextLavelLoad(){
+	//сохраняем значение очков на старте уровня, что бы восстановить их после закрытия приложения
+	localStorage.setItem("lScore",localStorage.getItem("cScore"));
 	localStorage.setItem("level",parseInt(currentLevel) + 1);
 	window.location.reload();
 }
@@ -536,6 +543,13 @@ function GameInfoHide(){
 	musicInfo.currentTime = 0; 
 	music.play();
 	HidePopup();
+	//Если попап закрывается впервые
+	if(sessionStorage.getItem("isFirstRunTime") === null){
+		//стартуем игру
+		StartLevel();
+		//Записываем в сессию, что попап уже был открыт 
+		sessionStorage.setItem("isFirstRunTime", 0);
+	}
 }
 
 function BackPopupShow(){
