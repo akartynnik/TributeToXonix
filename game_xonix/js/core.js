@@ -81,7 +81,7 @@ var levels = [
 			"number": "8", 
 			"ballsCount": 5, 
 			"wardsNumber": 2,
-			"levelName": "Level VIIL", 
+			"levelName": "Level VIII", 
 			"coeff": 800},
     ];
 	
