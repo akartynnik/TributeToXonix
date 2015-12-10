@@ -1,2 +1,2 @@
-# tribute-to-artifact-games
-LG Hackcaton folder
+# Tribute To Artifact Games
+Репозиторий с играми нашей компании. В папке 'add-files' есть файл 'ttag.bat'. Его надо положить по любому пути, который описан в переменной среды 'PATH'
