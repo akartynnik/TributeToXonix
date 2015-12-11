@@ -118,14 +118,10 @@ var levelImagesArray = [
 var keyHash = {37: 'left', 39: 'right', 38: 'up', 40: 'down'};
 /*-------------------GLOABAL FARIABLE END-----------------------*/
 
-// Обработчик выхода приложения в background режим. Не сработало на эмуляторе. Проверить на телевизоре.
-document.addEventListener ('visibilityChange', function() {
-    if (document.hidden)
-       PauseOn();
-    else
-       PauseOff();
-}, true);
-
+document.addEventListener('mousemove',function(e){
+  if( e.target.getAttribute('unselectable')=='on' )
+    e.target.ownerDocument.defaultView.getSelection().removeAllRanges();
+},false);
 
 /*------------------- KEY PRESS PROCESSOR START -------------------------*/
 $(document).keydown(function(e) {
@@ -259,7 +255,6 @@ $(function () {
 			currentMusicFileName = levelMusicsArray[Math.floor((Math.random() * levelMusicsArray.length))].music;
 		music = new Audio("music/"+ currentMusicFileName);
 		music.loop = true;
-		music.play();
 		
 		//Set bonus game images
 		if(typeof levels[currentLevel-1].warderImg !== 'undefined')
@@ -529,8 +524,8 @@ function PauseOff(){
 function GameInfoShow(){
 	$('#info').load("info.html");
 	music.pause();
-	musicInfo.play();
 	musicInfo.loop = true;
+	musicInfo.play();
 	ShowPopup("info");
 }
 

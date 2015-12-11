@@ -11,6 +11,9 @@
 body {
 	background-color: #000; 
 	color: #ffffff;
+	-moz-user-select: none;
+	-khtml-user-select: none;
+	user-select: none; 
 }
 
 .pre-logo {
