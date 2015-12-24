@@ -7,7 +7,7 @@
 		<div class="left-block">
 			<div style="padding: 0 20px;">
 				<div class="rules">
-					All simple. Just cut black field and open picture as soon as possible.
+					You should open over 85% of the hidden picture to win the level.  If you lose 3 times, you will start from the first level.
 				</div>
 			
 				<table class="enemy-table">
@@ -16,7 +16,7 @@
 							<img src="images/ball.png"/>
 						</td>
 						<td>
-							Catch him! But don't touch him!
+							It's Ball. You should catch him, but don't touch him!
 						</td>
 					</tr>
 					
@@ -25,7 +25,7 @@
 							<img src="images/warder.png"/>
 						</td>
 						<td>
-							Danger! Run from him!
+							It's Warder. You should run from him.
 						</td>
 					</tr>
 				</table>
@@ -126,7 +126,7 @@
 							designer:
 						</td>
 						<td>
-							<span style="color: green">Evgeniy Bururlia</span>
+							<span style="color: green">Evgeni Buturlia</span>
 						</td>
 					</tr>
 					<tr>
@@ -143,16 +143,8 @@
 	</div>
 
 	<div class="game-start">
-		<a id="info-link" href="#" onclick="GameInfoHide();">PRESS <span class="here">HERE</span> OR <span class="red">RED BUTTON</span> <span id="info-link-action"></span></a>
+		<div id="info-link">PRESS <a class="here" href="#" onclick="GameInfoHide();">HERE</a> OR <span class="red">RED BUTTON</span> <span id="info-link-action"></span>TO PLAY</div>
 	</div>
 </div>
 
-<script>
-$(function () {
-	if(sessionStorage.getItem("isFirstRunTime") === "0"){
-		$('#info-link-action').text("TO RETURN IN GAME");
-	} else {
-		$('#info-link-action').text("TO PLAY");
-	}
-});
-</script>
+

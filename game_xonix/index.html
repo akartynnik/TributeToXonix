@@ -5,9 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1"> 
         <title>Tribute to Xonix</title>
-
 		<link rel="stylesheet" href="css/style.css">
-		
     </head>
     <body>
         <div class="my-container">
@@ -37,12 +35,11 @@
             </div>
 
             <div id="graphics" class="my-center"></div>
-			<div class="bottom-nav" id="bottom-nav" style="padding-top: 90px;">
-				<a href="#" onclick="PauseOn();" style="color: blue;">BLUE: PAUSE</a>
-				<a href="#" onclick="GameInfoShow();">RED: INFO</a>
+			<div class="bottom-nav" style="padding-top: 90px;">
+				<a style="color: blue;">BLUE: PAUSE</a>
+				<a>RED: INFO</a>
 			</div>
         </div>
-		
 
 		<div id="popup">
 			<span id="you-lose" class="popup-header">YOU LOSE...</span>
@@ -50,19 +47,19 @@
 			<span id="pause"  class="popup-header" style="color: blue;">PAUSE</span>
 			<span id="your-score"></span>
 			<span id="new-game" class="popup-header" style="font-size: 28px;">DO YOU WANT TO START NEW GAME?</span>
-			<a href="#" id="you-lose-btn" onclick="RestartGame();">
-				PRESS <span class="here">HERE</span> OR <span style="color: green">GREEN BUTTON</span> TO PLAY AGAIN
-			</a>
-			<a href="#" id="you-win-btn" onclick="RestartGame();">
-				PRESS <span class="here">HERE</span> OR <span style="color: green">GREEN BUTTON</span> TO START NEW GAME
-			</a>
-			<a href="#" id="pause-btn" onclick="PauseOff();" style="margin-top: 10px;">
-				PRESS <span class="here">HERE</span> OR <span style="color: blue">BLUE BUTTON</span> TO START
-			</a>
-			<a href="#" id="new-game-btn" onclick="return false;" style="margin-top: 10px;">
+			<div id="you-lose-btn">
+				PRESS <a href="#" class="here" onclick="RestartGame();">HERE</a> OR <span style="color: green">GREEN BUTTON</span> TO PLAY AGAIN
+			</div>
+			<div id="you-win-btn">
+				PRESS <a class="here" href="#" onclick="RestartGame();">HERE</a> OR <span style="color: green">GREEN BUTTON</span> TO START NEW GAME
+			</div>
+			<div id="pause-btn" style="margin-top: 10px;">
+				PRESS <a class="here" href="#" id="pause-btn" onclick="PauseOff();">HERE</a> OR <span style="color: blue">BLUE BUTTON</span> TO START
+			</div>
+			<div id="new-game-btn" style="margin-top: 10px;">
 				PRESS <span style="color: gray" class="here" onclick="backPressed = false; HidePopup();">BACK</span> TO CANCEL 
 				OR <span style="color: white" class="here" onclick="RestartGame();">OK</span> TO START NEW GAME
-			</a>
+			</div>
 			
 			<div id="info" ></div>
 		</div>

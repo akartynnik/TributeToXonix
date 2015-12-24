@@ -81,7 +81,7 @@ var levels = [
 			"number": "8", 
 			"ballsCount": 5, 
 			"wardsNumber": 2,
-			"levelName": "Level VIII", 
+			"levelName": "Level VIIL", 
 			"coeff": 800},
     ];
 	
@@ -118,10 +118,14 @@ var levelImagesArray = [
 var keyHash = {37: 'left', 39: 'right', 38: 'up', 40: 'down'};
 /*-------------------GLOABAL FARIABLE END-----------------------*/
 
-document.addEventListener('mousemove',function(e){
-  if( e.target.getAttribute('unselectable')=='on' )
-    e.target.ownerDocument.defaultView.getSelection().removeAllRanges();
-},false);
+// Обработчик выхода приложения в background режим. Не сработало на эмуляторе. Проверить на телевизоре.
+document.addEventListener ('visibilityChange', function() {
+    if (document.hidden)
+       PauseOn();
+    else
+        PauseOff();
+}, true);
+
 
 /*------------------- KEY PRESS PROCESSOR START -------------------------*/
 $(document).keydown(function(e) {
@@ -225,11 +229,6 @@ $(function () {
 		localStorage.setItem("level",currentLevel);
 	}
 	
-	//Если игра была закрыта и теперь открыта повторно - выставляем очки на момент начала уровня, на котором игру закрыли
-	if(sessionStorage.getItem("isFirstRunTime") === null){
-		localStorage.setItem("cScore",localStorage.getItem("lScore"));
-	}
-	
 	//Инициализация и установка current score и high score в local-storage
 	if(localStorage.getItem("cScore") === null || currentLevel==1)
 		localStorage.setItem("cScore",0);
@@ -255,6 +254,7 @@ $(function () {
 			currentMusicFileName = levelMusicsArray[Math.floor((Math.random() * levelMusicsArray.length))].music;
 		music = new Audio("music/"+ currentMusicFileName);
 		music.loop = true;
+		music.play();
 		
 		//Set bonus game images
 		if(typeof levels[currentLevel-1].warderImg !== 'undefined')
@@ -302,13 +302,14 @@ $(function () {
 			cur2ImgSrc: "images/" + cur2Img,
 		});
 		elCanvas.css({width: w, height: h});
-		
+
 		//Если заходим в игру впервые - выводим инфоокно
 		if(sessionStorage.getItem("isFirstRunTime") === null){
 			GameInfoShow();
-		} else {
-			StartLevel();
-		}
+		} 
+	
+		//стартуем игру
+		StartLevel();
 	}
 
 });
@@ -318,7 +319,6 @@ $(function () {
 //Функция инициализации и старта игры
 function StartLevel() {
 	var randomImageNumber = Math.floor((Math.random() * levelImagesArray.length));
-	//по ходу следующей строкой игра запускается
 	picxonix('level', levelImagesArray[randomImageNumber]);
 	startLevelTime = Date.now(); 
 	nTimeLevel = 0;
@@ -368,6 +368,7 @@ function RaiseConquer() {
 	setTimeout(function() {
 		picxonix('end', true);
 	}, 200);
+	ShowPopup("winlevel");
 	music.pause();
 	musicErasure.play();
 	setTimeout(function() {NextLavelLoad();}, 4000);
@@ -392,8 +393,7 @@ function CalculateScore(cleared, coeff){
 	var minutes = parseInt(time.text().split(":")[0]);
 	var seconds = parseInt(time.text().split(":")[1]);
 	var secondsFromStartLevel = minutes*60+seconds
-	var timeCoeff = Math.round((secondsFromStartLevel/30))+1;
-	
+	var timeCoeff = Math.round((secondsFromStartLevel/30))+1;	
 	var currentScore=Math.round(parseInt(localStorage.getItem("cScore"))+(diff*coeff)/timeCoeff);
 	localStorage.setItem("cScore", currentScore);
 	$("#c_score").text(currentScore.toString().replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 '));
@@ -411,8 +411,6 @@ function SetHighScore(){
 }
 
 function NextLavelLoad(){
-	//сохраняем значение очков на старте уровня, что бы восстановить их после закрытия приложения
-	localStorage.setItem("lScore",localStorage.getItem("cScore"));
 	localStorage.setItem("level",parseInt(currentLevel) + 1);
 	window.location.reload();
 }
@@ -435,9 +433,21 @@ function ShowPopup(popupType){
 			$("#pause-btn").css("display","none");
 			$("#you-lose-btn").css("display","none");
 			$("#new-game-btn").css("display","none");
-			
-			$("#bottom-nav").css("display","none");
+			//$("#info-btn").css("display","none");
 			gameStatus = "win";	
+			break;
+		case "winlevel": 
+			$("#you-lose").css("display","none");
+			$("#you-win").css("display","block"); 
+			$("#pause").css("display","none");
+			$("#new-game").css("display","none");
+			$("#info").css("display","none");
+			$("#your-score").css("display","none");
+			$("#you-win-btn").css("display","none");
+			$("#pause-btn").css("display","none");
+			$("#you-lose-btn").css("display","none");
+			$("#new-game-btn").css("display","none");
+			//$("#info-btn").css("display","none");
 			break;
 		case "lose": 
 			$("#you-lose").css("display","block");
@@ -450,6 +460,7 @@ function ShowPopup(popupType){
 			$("#you-win-btn").css("display","none");
 			$("#pause-btn").css("display","none");
 			$("#new-game-btn").css("display","none");
+			//$("#info-btn").css("display","none");
 			gameStatus = "lose";
 			break;
 		case "pause": 
@@ -463,6 +474,7 @@ function ShowPopup(popupType){
 			$("#you-win-btn").css("display","none");
 			$("#pause-btn").css("display","block");
 			$("#new-game-btn").css("display","none");
+			//$("#info-btn").css("display","none");
 			break;
 		case "back": 
 			$("#you-lose").css("display","none");
@@ -475,6 +487,7 @@ function ShowPopup(popupType){
 			$("#you-win-btn").css("display","none");
 			$("#pause-btn").css("display","none");
 			$("#new-game-btn").css("display","block");
+			//$("#info-btn").css("display","none");
 			break;
 		case "info":
 			$("#you-lose").css("display","none");
@@ -487,6 +500,7 @@ function ShowPopup(popupType){
 			$("#you-win-btn").css("display","none");
 			$("#pause-btn").css("display","none");
 			$("#new-game-btn").css("display","none");
+			//$("#info-btn").css("display","block");
 			break;
 		default:
 	}
@@ -524,24 +538,17 @@ function PauseOff(){
 function GameInfoShow(){
 	$('#info').load("info.html");
 	music.pause();
-	musicInfo.loop = true;
 	musicInfo.play();
+	musicInfo.loop = true;
 	ShowPopup("info");
 }
 
 function GameInfoHide(){
-	$('#info').html("");
+	$('#index').load("index.html");
 	musicInfo.pause();
 	musicInfo.currentTime = 0; 
 	music.play();
 	HidePopup();
-	//Если попап закрывается впервые
-	if(sessionStorage.getItem("isFirstRunTime") === null){
-		//стартуем игру
-		StartLevel();
-		//Записываем в сессию, что попап уже был открыт 
-		sessionStorage.setItem("isFirstRunTime", 0);
-	}
 }
 
 function BackPopupShow(){
@@ -551,7 +558,6 @@ function BackPopupShow(){
 function BackPopupHide(){
 	HidePopup();
 }
-
 
 function ParseUrl(val) {
     var result = null,
@@ -565,4 +571,3 @@ function ParseUrl(val) {
     });
     return result;
 }
-    

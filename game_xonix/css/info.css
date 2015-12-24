@@ -96,7 +96,7 @@ body {
 	margin-top: 50px;
 }
 
-.game-start a#info-link {
+.game-start div#info-link {
 	color: green;
 	font-size: 30px;
 }
