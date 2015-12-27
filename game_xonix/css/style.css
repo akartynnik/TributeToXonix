@@ -133,7 +133,7 @@ div.my-container {
 }
 
 #popup a,
-#popup div {
+#popup div.button-menu{
 	font-family: "Qix Large";
 	font-size: 25px;
 	line-height: 32px;
