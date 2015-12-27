@@ -35,15 +35,16 @@
             </div>
 
             <div id="graphics" class="my-center"></div>
-			<div class="bottom-nav" style="padding-top: 90px;">
-				<a style="color: blue;">BLUE: PAUSE</a>
-				<a>RED: INFO</a>
+			<div class="bottom-nav" id="bottom-nav" style="padding-top: 90px;">
+				<a href="#" onclick="PauseOn();" style="color: blue;">BLUE: PAUSE</a>
+				<a href="#" onclick="GameInfoShow();">RED: INFO</a>
 			</div>
         </div>
 
 		<div id="popup">
 			<span id="you-lose" class="popup-header">YOU LOSE...</span>
 			<span id="you-win"  class="popup-header" style="color: yellow;">YOU  WIN!</span>
+			<span id="you-finished"  class="popup-header" style="color: yellow; display: none; font-size: 35px;">YOU  FINISHED GAME!</span>
 			<span id="pause"  class="popup-header" style="color: blue;">PAUSE</span>
 			<span id="your-score"></span>
 			<span id="new-game" class="popup-header" style="font-size: 28px;">DO YOU WANT TO START NEW GAME?</span>
