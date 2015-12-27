@@ -548,8 +548,10 @@ function PauseOff(){
 function GameInfoShow(){
 	if(gameStatus == "lose")
 		return false;
+	if(sessionStorage.getItem("isFirstRunTime") === "0"){
+		music.pause();
+	}
 	$('#info').load("info.html");
-	music.pause();
 	musicInfo.play();
 	musicInfo.loop = true;
 	ShowPopup("info");
