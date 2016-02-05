@@ -25,7 +25,7 @@ var elTime = $('#status-time');
 var w = 1360;
 var h = 800;
 var allowedFails = 3; //default = 3
-var percentToWin = 1; //default = 80
+var percentToWin = 80; //default = 80
 var canvasPopupPositionX = Math.floor((w- 700)/ 2)
 var canvasPopupPositionY = Math.floor((h- 200)/ 2);
 
@@ -564,7 +564,7 @@ function GameInfoHide(){
 	music.play();
 	HidePopup();
 	//Если попап закрывается впервые
-	if(sessionStorage.getItem("isFirstRunTime") === null){
+	if(sessionStorage.getItem("isFirstRunTime") == null){
 		//стартуем игру
 		StartLevel();
 		//Записываем в сессию, что попап уже был открыт 
