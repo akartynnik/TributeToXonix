@@ -6,7 +6,7 @@ var currentNumberFaults = 0;
 var currentLevel;
 var music = null;
 var musicFail = new Audio("music/fault.wav");
-var musicInfo = new Audio("music/info.mp3");
+//var musicInfo = new Audio("music/info.mp3");
 var musicErasure = new Audio("music/erasure-all.wav");
 var currentMusicFileName;
 var warderImg;
@@ -552,15 +552,15 @@ function GameInfoShow(){
 		music.pause();
 	}
 	$('#info').load("info.html");
-	musicInfo.play();
-	musicInfo.loop = true;
+	//musicInfo.play();
+	//musicInfo.loop = true;
 	ShowPopup("info");
 }
 
 function GameInfoHide(){
 	$('#info').html("");
-	musicInfo.pause();
-	musicInfo.currentTime = 0; 
+	//musicInfo.pause();
+	//musicInfo.currentTime = 0; 
 	music.play();
 	HidePopup();
 	//Если попап закрывается впервые
